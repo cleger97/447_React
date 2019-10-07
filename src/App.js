@@ -1,10 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import CanvasJSReact from './canvasjs.react.js';
 import './App.css';
+const CanvasJS = CanvasJSReact.CanvasJS;
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-function App() {
-  return (
-    <div className="App">
+export default class App extends Component {	
+	render() {
+		// Code is mostly in DataHandle, not wiring to App as of yet.
+		return null;
+	}
+}
+
+
+// old react stuff
+/*import logo from './logo.svg';
+
+  <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -19,8 +30,4 @@ function App() {
           Learn React
         </a>
       </header>
-    </div>
-  );
-}
-
-export default App;
+    </div>*/
