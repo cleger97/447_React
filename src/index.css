@@ -11,3 +11,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.data { 
+  overflow: none;
+}
+
+.test {
+  border-style: solid;
+  margin: 0px; 
+}
+.rowTest {
+  border-style: solid;
+  color: red;
+}
+
+.row {
+
+}
+
+.box {
+  min-height: 30vh;
+  display: flex;
+  flex-direction: column;
+  /*max-height: 30vh; */
+}
+
+.side {
+  height: 90vh;
+  /*max-height: 90vh; */
+  float: right;
+}
+
+.bar {
+  height: 10vh;
+  max-height: 10vh;
+}

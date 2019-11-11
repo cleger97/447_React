@@ -58,7 +58,7 @@ export default class DataHandle extends Component {
     return (
       <div>
         <NumberOccurenceChart chartInfo = 'inside_outside' data = {occurData} />
-        <NumberOccurenceChart chartInfo = 'weapon' data = {occurData2} />
+        
       </div>
     );
   }
