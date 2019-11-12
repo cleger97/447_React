@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import ChartJS from 'chart.js';
+import {Doughnut} from 'react-chartjs-2';
 
 var insideFetch = 'http://ec2-34-228-208-5.compute-1.amazonaws.com/count/?inside_outside=Inside';
 var outsideFetch = 'http://ec2-34-228-208-5.compute-1.amazonaws.com/count/?inside_outside=Outside';
@@ -18,10 +20,29 @@ export default class InOutChart extends Component {
   }
 
   render() {
+    var dataValues = this.state.data;
+    var data = {
+        labels: this.state.keys,
+        datasets: [{
+          data: this.state.data,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)'
+          ]
+        }]
+      } 
+    var options = {
+      maintainAspectRatio : false
+    }
     return (
       <React.Fragment>
-      <p> {this.state.data} </p>
-      <p> {this.state.keys} </p>
+        <h5> Crimes by Location </h5>
+        <div class = 'fill'>
+          <Doughnut data = {data} options = {options}  />
+        </div>
+      
+    
+
       </React.Fragment>
     );
   }

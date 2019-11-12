@@ -4,12 +4,15 @@ import './index.css';
 //import App from './App';
 import * as serviceWorker from './serviceWorker';
 import InOutChart from './InOutChart'
+import WeaponTypeChart from './WeaponTypeChart'
 
 //ReactDOM.render(<App />, document.getElementById('root'));
 
 //ReactDOM.render(<DataHandle />, document.getElementById('data'));
 
 ReactDOM.render(<InOutChart />, document.getElementById('inoutchart'));
+
+ReactDOM.render(<WeaponTypeChart />, document.getElementById('weaponchart'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
