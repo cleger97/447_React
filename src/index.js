@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+//import App from './App';
 import * as serviceWorker from './serviceWorker';
-import DataHandle from './DataHandle'
+import InOutChart from './InOutChart'
 
 //ReactDOM.render(<App />, document.getElementById('root'));
 
-ReactDOM.render(<DataHandle />, document.getElementById('data'));
+//ReactDOM.render(<DataHandle />, document.getElementById('data'));
+
+ReactDOM.render(<InOutChart />, document.getElementById('inoutchart'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

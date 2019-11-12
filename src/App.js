@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import CanvasJSReact from './canvasjs.react.js';
 import './App.css';
-const CanvasJS = CanvasJSReact.CanvasJS;
-const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export default class App extends Component {	
 	render() {
