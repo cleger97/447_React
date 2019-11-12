@@ -17,16 +17,18 @@ export default class WeaponTypeChart extends Component {
       data: []
     };
 
-    
-    loadWeapons(this);
-
     return;
     
   }
 
-  render() {
+  componentDidMount() {
+    Promise.all([loadWeapons(this)]);
+  }
 
-    /*
+  render() {
+    console.log(this.state.data);
+    console.log(this.state.keys);
+
     var dataValues = this.state.data;
     var data = {
         labels: this.state.keys,
@@ -42,17 +44,10 @@ export default class WeaponTypeChart extends Component {
       <React.Fragment>
         <h5> Crimes by Weapon Type </h5>
         <div class = 'fill'>
-          <Doughnut data = {data} options = {options}  />
+          <Doughnut data = {data} options = {options} redraw />
         </div>
-      
-    
-
       </React.Fragment>
     );
-
-    */
-
-    return null;
   }
 }
 
@@ -68,7 +63,7 @@ function loadWeapons(obj) {
     })
     .then((res) => res.json())
     .then(data => {
-      obj.state = {keys : data};
+      obj.setState({keys : data});
       console.log(obj.state.keys);
       enumerateData(obj, data);
     }); 
@@ -95,18 +90,17 @@ function enumerateData(obj, keys) {
     .then((res) => res.json())
     .then(data => {
       values.push(data);
-      obj.state = {data: values}
-      console.log(obj.state.data);
-
+      obj.setState({data: values});
+      
+      //console.log(obj.state.data);
       i++;
       if (i < keys.length) {
         fetchNext();
       }
-
     }); 
   }
 
   fetchNext();
 
-  //console.log(obj.state.data);
+  return;
 }
