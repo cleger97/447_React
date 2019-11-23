@@ -3,10 +3,10 @@ import ChartJS from 'chart.js';
 import {Doughnut} from 'react-chartjs-2';
 
 // weapon list fetch
-var weaponFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/weapon/";
+var weaponFetch = "http://localhost:80/weapon/";
 // count of weapon fetch
 // append key to end
-var countFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/count/?weapon=";
+var countFetch = "http://localhost:80/count/?weapon=";
 
 export default class WeaponTypeChart extends Component {
   constructor(props) {

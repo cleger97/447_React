@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import ChartJS from 'chart.js';
 import {Doughnut} from 'react-chartjs-2';
 
-var insideFetch = 'localhost:30/count/?inside_outside=Inside';
-var outsideFetch = 'localhost:30/count/?inside_outside=Outside';
+var insideFetch = 'http://localhost:80/count/?inside_outside=Inside';
+var outsideFetch = 'http://localhost:80/count/?inside_outside=Outside';
 
 
 export default class InOutChart extends Component {
