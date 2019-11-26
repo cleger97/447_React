@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+
+        <div class = "top_bar">
+            <h1 style = "font-size: 48px">Touch Point Baltimore</h1>
+            <h1 style = "font-size: 20px; padding-left: 8px">Crime Data Visualizer</h1>
+        </div>
+        
+
+    </head>
+
+    <body>
+        <form></form>
+            <div class="wrapper">  
+
+                <div class = "graphs">
+
+                    <div class = "square">a</div>
+                    <div class = "square">b</div>
+                    <div class = "square">c</div>
+                    <div class = "square">d</div>
+                    <div class = "square">e</div>
+                    <div class = "square">f</div> 
+                    <div class = "square">g</div>
+                    <div class = "square">h</div> 
+
+                </div>
+
+
+                <div class = "side_bar">
+                    <div>
+                        <h2>Crime Type</h2>
+                        <input type="checkbox" name="Agg. Assault" value="TRUE"> Agg. Assault<br>
+                        <input type="checkbox" name="Auto Theft" value="TRUE"> Auto Theft<br>
+                        <input type="checkbox" name="Burglary" value="TRUE"> Burglary<br>
+                        <input type="checkbox" name="Common Assult" value="TRUE"> Common Assault<br>
+                        <input type="checkbox" name="Larceny" value="TRUE"> Larceny<br>
+                        <input type="checkbox" name="Larceny from Auto" value="TRUE"> Larceny from Auto<br>
+                        <input type="checkbox" name="Robbery - Carjacking" value="TRUE"> Robbery - Carjacking<br>
+                        <input type="checkbox" name="Robbery - Commercial" value="TRUE"> Robbery - Commercial<br>
+                        <input type="checkbox" name="Robbery - Residence" value="TRUE"> Robbery - Residence<br>
+                        <input type="checkbox" name="Robbery - Street" value="TRUE"> Robbery - Street<br>
+                        <input type="checkbox" name="Shooting" value="TRUE"> Robbery - Shooting<br>
+                    </div>
+
+                    <div>
+                        <h2>Weapons</h2>
+                        <input type="checkbox" name="Knife" value="TRUE"> Knife<br>
+                        <input type="checkbox" name="Firearm" value="TRUE"> Firearm<br>
+                        <input type="checkbox" name="Hands" value="TRUE"> Hands<br>
+                        <input type="checkbox" name="Other" value="TRUE"> Other<br>
+                        <input type="checkbox" name="N/A" value="TRUE"> N/A<br>
+                    </div>
+
+                    <div>
+                        <h2>Location</h2>
+                        <form action="/action_page.php">
+                            Street Address: <br>
+                            <input type="text" name="Address"><br>
+
+                            Latitude & Longitude: <br>
+                            <input type="text" name="LatLong"><br>
+                        
+                            <form action="" method="post">
+                                <input type="radio" name="In_Out" value="TRUE" /> Inside
+                                <input type="radio" name="In_Out" value="TRUE" /> Outside
+                                <input type="radio" name="In_Out" value="TRUE" /> Either
+                            </form>
+
+                        </form>
+                    </div>
+
+                    <div>
+                        <h2>Date & Time</h2>
+
+                        <input type="date" id="Crime_Date" name="Crime_Date">
+                        <input type="time" id="Crime_Time" name="Crime_Time">
+
+                        <form action="" method="post">
+                            <input type="radio" name="Timing" value="TRUE" /> Specific Time<br>
+                            <input type="radio" name="Timing" value="TRUE" /> Before Specified Time<br>
+                            <input type="radio" name="Timing" value="TRUE" /> After Specified Time<br>
+                        </form>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+            </div>  
+        </form> 
+    </body>
+</html>
+
+<!--
+    Questions for the team:
+
+How do I link the boxes to the databse for querying?
+How do I get React working with it?
+Are they in the right format?
+What other filters are we going to include?
+
+    To Do:
+
+Beautification
+    color selection
+    general css magic
+
+Database Querying
+    linking to database
+-->
