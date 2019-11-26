@@ -3,7 +3,7 @@ import ChartJS from 'chart.js';
 import {Doughnut} from 'react-chartjs-2';
 
 // weapon list fetch
-var weaponFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/weapon/";
+var weaponFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/weapon-count/";
 // count of weapon fetch
 // append key to end
 var countFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/count/?weapon=";
@@ -63,9 +63,21 @@ function loadWeapons(obj) {
     })
     .then((res) => res.json())
     .then(data => {
-      obj.setState({keys : data});
+      //obj.setState({keys : data});
       console.log(obj.state.keys);
-      enumerateData(obj, data);
+      
+      var keyVal = Object.keys(data);
+      var values = Object.values(data);
+
+      obj.setState({
+        keys : keyVal,
+        data: values
+      });
+
+      console.log(keyVal);
+      console.log(values);
+      
+      //enumerateData(obj, data);
     }); 
 }
 
