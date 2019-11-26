@@ -5,7 +5,9 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import InOutChart from './InOutChart'
 import WeaponTypeChart from './WeaponTypeChart'
-import Timeline from './Timeline'
+import HeatMap from './heatmap';
+import Timeline from './Timeline';
+
 
 //ReactDOM.render(<App />, document.getElementById('root'));
 
@@ -14,6 +16,9 @@ import Timeline from './Timeline'
 ReactDOM.render(<InOutChart />, document.getElementById('inoutchart'));
 
 ReactDOM.render(<WeaponTypeChart />, document.getElementById('weaponchart'));
+
+
+ReactDOM.render(<HeatMap />, document.getElementById('heatmap'));
 
 ReactDOM.render(<Timeline />, document.getElementById('timeline'))
 // If you want your app to work offline and load faster, you can change
