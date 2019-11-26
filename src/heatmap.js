@@ -1,7 +1,7 @@
 // HeatMap react
 import React, {Component} from 'react';
-import Heatmap from './heatmap.min.js';
-import Leaflet from './leaflet-heatmap.js';
+//import Heatmap from './heatmap.min.js';
+//import Leaflet from './leaflet-heatmap.js';
 
 export default class HeatMap extends Component {
   render() {
@@ -38,6 +38,7 @@ export default class HeatMap extends Component {
     var mymap = new L.map('mapid', { layers: [baseLayer, heatmapLayer] }).setView({ lat: 39.29, lon: -76.60, }, 11);
     heatmapLayer.setData(testData);
     */
+   return null;
   }
 
   
