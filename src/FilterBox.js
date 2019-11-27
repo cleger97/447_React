@@ -10,6 +10,7 @@ export default class FilterBox extends Component {
     
 
     render() {
+
 	return (
       <React.Fragment>
         <h5> Crimes by Location </h5>
@@ -19,3 +20,5 @@ export default class FilterBox extends Component {
       </React.Fragment>)
     }
 }
+
+
