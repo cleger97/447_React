@@ -1,0 +1,21 @@
+import React, {Component} from 'react';
+
+var crimeColumnVals = ["weapon",  "crimecode", "description"]
+var locationColumnVals = ["neighborhood", "post", "district", "premise", "location"]
+var locationFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/crime-column-value/";
+var locationFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/location-column-value/";
+
+
+class FilterBox extends React.Component {
+    
+
+    render() {
+	return (
+      <React.Fragment>
+        <h5> Crimes by Location </h5>
+        <div class = 'fill'>
+	<h1>Hello, {this.props.name}</h1>
+        </div>
+      </React.Fragment>)
+    }
+}
