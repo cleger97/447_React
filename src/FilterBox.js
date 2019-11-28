@@ -11,16 +11,46 @@ export default class FilterBox extends Component {
     
     constructor(props){
 	super(props);
+	this.state = {
+	    ready : false
+	}
+	
+    }
+
+    componentDidMount(){
+
+	this.componentList = [
+		<FilterList url={crimeFetch} column={crimeColumnVals[0]} label="Weapons">
+		</FilterList>,
+		<FilterList url={crimeFetch} column={crimeColumnVals[1]} label="Crimecode">
+		</FilterList>,
+		<FilterList url={crimeFetch} column={crimeColumnVals[2]} label="Description">
+		</FilterList>,
+		<FilterList url={locationFetch} column={locationColumnVals[0]} label="">
+		</FilterList>,
+		<FilterList url={locationFetch} column={locationColumnVals[1]} label="">
+		</FilterList>,
+		<FilterList url={locationFetch} column={locationColumnVals[2]} label="">
+		</FilterList>,
+		<FilterList url={locationFetch} column={locationColumnVals[3]} label="">
+		</FilterList>,
+		<FilterList url={locationFetch} column={locationColumnVals[4]} label="">
+		</FilterList>,
+]
+
+	this.setState({ready:true});
     }
 
     render() {
 
+	if (this.state.ready == false){
+	    return null;
+	}
 	return (
       <React.Fragment>
         <h5> BTW - Please dont branch  </h5>
         <div class = 'fill' id = 'filter-box'>
-		<FilterList url={crimeFetch} column={crimeColumnVals[0]} label="Weapons">
-		</FilterList>
+		{this.componentList}
         </div>
       </React.Fragment>)
     }
@@ -60,8 +90,7 @@ class FilterList extends Component {
 	console.log(dataValues);
 	return (
 		<React.Fragment>
-		
-		<select>
+		<select multiple>
 		{options}
 		</select>
 		</React.Fragment>
