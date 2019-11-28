@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 //import { Map, TileLayer } from 'react-leaflet';
 //import Heatmap from './heatmap.min.js';
-//import Leaflet from './leaflet-heatmap.js';
+import Leaflet from 'leaflet';
 
 export default class HeatMap extends Component {
 
@@ -19,8 +19,7 @@ export default class HeatMap extends Component {
 		<div id="mapid">
 		<script src="heatmap.min.js"></script>
 		<script src="leaflet-heatmap.js"></script>
-		<script>
-		</script>
+		
 		</div>
 		<h5> Test 2 </h5>
 		</React.Fragment>
