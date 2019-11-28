@@ -32,25 +32,45 @@ class FilterList extends Component {
 	this.url = this.props.url;
 	this.column = this.props.column;
 	this.state = {
-	    data: []
+	    data: [],
+	    dataFetched: false
 	};
-	Promise.all([getData(this, this.url+"?column="+this.column)]);
+    }
+
+    componentDidMount(){
+	getData(this, this.url+"?column="+this.column);
     }
 
     render() {
+	if(this.state.dataFetched == false) {
+	    return null
+	}
+	
 	var dataValues = this.state.data;
+
+	var options = [];
 	console.log("Here");
 	console.log(dataValues);
 	return (
 		<React.Fragment>
 		<select>
-		<option value ={dataValues[0]}>
+		<option value={dataValues[0]}>{dataValues[0]}
 		</option>
 		</select>
 		</React.Fragment>
 	)
     }
     
+}
+
+class FilterItem extends Component{
+    constructor(props){
+	super(props);
+	this.label = this.props.label;
+    }
+    render(){
+	return null;
+    }
 }
 
 function getData(obj, url) {
@@ -67,7 +87,8 @@ function getData(obj, url) {
     })
 	.then(data => {
 	    console.log("Got ", data);
-      obj.setState({ data : data});
+	    obj.setState({ data : data,
+			   dataFetched: true});
     });
 }
 
