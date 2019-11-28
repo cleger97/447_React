@@ -1,6 +1,6 @@
 // HeatMap react
 import React, {Component} from 'react';
-//import Heatmap from './heatmap.min.js';
+//import './heatmap.min.js';
 //import Leaflet from './leaflet-heatmap.js';
 
 export default class HeatMap extends Component {
@@ -38,7 +38,14 @@ export default class HeatMap extends Component {
     var mymap = new L.map('mapid', { layers: [baseLayer, heatmapLayer] }).setView({ lat: 39.29, lon: -76.60, }, 11);
     heatmapLayer.setData(testData);
     */
-   return null;
+    return (
+	    <React.Fragment>
+	    <h5> This is a test </h5>
+	    <div class = 'fill'>
+	    <h1> This is a bigger test </h1>
+	    </div>
+	    </React.Fragment>)
+	      
   }
 
   
