@@ -51,8 +51,13 @@ code {
   height: 10vh;
   max-height: 10vh;
 }
-/*
-#dataForm {
-    color: red;
+
+.filter-label{
+    font-size: small;
 }
-*/
+
+.filter-select {
+    color: red;
+    font-size: x-small;
+    width: 200px;
+}

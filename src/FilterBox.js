@@ -1,17 +1,32 @@
 import React, {Component} from 'react';
 
 var crimeColumnVals = ["weapon",  "crimecode", "description"]
-var locationColumnVals = ["neighborhood", "post", "district", "premise", "location"]
+var locationColumnVals = ["neighborhood", "post", "district", "premise"]
 var crimeFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/crime-column-value/";
 var locationFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/location-column-value/";
 
 async function getAllFilters(){
     var filtersList = [];
     for(var i = 0; i < crimeColumnVals.length; i++){
-	await getData(filtersList, crimeFetch+"?column="+crimeColumnVals[i]);
+	await getData(filtersList, crimeFetch, crimeColumnVals[i]);
     }
+    for(var i = 0; i < locationColumnVals.length; i++){
+	await getData(filtersList, locationFetch, locationColumnVals[i]);
+    }
+    
     console.log("Got", filtersList);
     return filtersList;
+}
+
+function titleCase(str) {
+    var splitStr = str.toLowerCase().split(' ');
+    for (var i = 0; i < splitStr.length; i++) {
+	// You do not need to check if i is larger than splitStr length, as your for does that for you
+	// Assign it back to the array
+	splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+    }
+    // Directly return the joined string
+    return splitStr.join(' ');
 }
 
 export default class FilterBox extends Component {
@@ -28,8 +43,6 @@ export default class FilterBox extends Component {
 
     componentDidMount(){
 	Promise.all([getAllFilters()]).then((filtersList) => {this.setState({ready: true, data: filtersList})});
-	
-	
     }
 
     render() {
@@ -40,33 +53,29 @@ export default class FilterBox extends Component {
 
 	console.log(this.state.data[0])
 	this.componentList = [
-		<FilterList data={this.state.data[0][0]} label="Weapons">
+		<FilterList data={this.state.data[0][0][0]} label={this.state.data[0][0][1]}>
 		</FilterList>,
-	    <FilterList data={this.state.data[0][1]} label="Weapons">
+	    <FilterList data={this.state.data[0][1][0]} label={this.state.data[0][1][1]}>
 		</FilterList>,
-	    <FilterList data={this.state.data[0][2]} label="Weapons">
-
-	    </FilterList>];
-	/**
-		<FilterList url={locationFetch} column={locationColumnVals[0]} label="">
+	    <FilterList data={this.state.data[0][2][0]} label={this.state.data[0][2][1]}>
 		</FilterList>,
-		<FilterList url={locationFetch} column={locationColumnVals[1]} label="">
+	    <FilterList data={this.state.data[0][3][0]} label={this.state.data[0][3][1]}>
 		</FilterList>,
-		<FilterList url={locationFetch} column={locationColumnVals[2]} label="">
+	    <FilterList data={this.state.data[0][4][0]} label={this.state.data[0][4][1]}>
 		</FilterList>,
-		<FilterList url={locationFetch} column={locationColumnVals[3]} label="">
+	    <FilterList data={this.state.data[0][5][0]} label={this.state.data[0][5][1]}>
 		</FilterList>,
-		]
-**/
-	
+	    <FilterList data={this.state.data[0][6][0]} label={this.state.data[0][6][1]}>
+		</FilterList>,
+	];
 	
 	return (
       <React.Fragment>
-        <h5> BTW - Please dont branch  </h5>
+		<h5> Filters:  </h5>
         <div class = 'fill' id = 'filter-box'>
 
 	    {this.componentList}
-	</div>
+	    </div>
       </React.Fragment>)
     }
 }
@@ -90,13 +99,16 @@ class FilterList extends Component {
 	for (var i = 0; i < this.props.data.length; i++) {
 	    options.push((<FilterItem label={this.props.data[i]}></FilterItem>));
 	}
+
+	var title = titleCase(this.label);
 	console.log(options);
 	console.log("Here");
 	return (
 		<React.Fragment>
-		<select multiple>
+		<h6 class="filter-label">{title}</h6>
+		<select class="filter-select" size="3" multiple>
 		{options}
-		</select>
+	        </select>
 		</React.Fragment>
 	)
     }
@@ -116,9 +128,9 @@ class FilterItem extends Component {
     }
 }
 
-async function getData(obj, url) {
-  console.log("Fetching url: " + url);
-  await fetch(url, {
+async function getData(obj, url, column) {
+  console.log("Fetching url: " + url + "?column=" + column);
+  await fetch(url+"?column="+column, {
       headers : { 
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -129,7 +141,7 @@ async function getData(obj, url) {
 	    return res.json();
     })
 	.then(data => {
-	    obj.push(data);
+	    obj.push([data, column]);
     });
 }
 
