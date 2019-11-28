@@ -10,17 +10,17 @@ export default class HeatMap extends Component {
     }
 
 
+    
+    
     render() {
 	
 	return (
-	    <React.Fragment>
-	    <h5> This is a test </h5>
-	    <div class = 'fill'>
-	    <h1> This is a bigger test </h1>
-	    </div>
-	    
-	    </React.Fragment>)
-	      
+		<React.Fragment>
+		<h5> This is a test </h5>
+		</React.Fragment>
+		                
+	) 
+	   
     }
 
   

@@ -17,9 +17,9 @@ export default class FilterBox extends Component {
 
 	return (
       <React.Fragment>
-        <h5> Filters  </h5>
+        <h5> BTW - Please dont branch  </h5>
         <div class = 'fill' id = 'filter-box'>
-		<FilterList url={crimeFetch} column={crimeColumnVals[0]}>
+		<FilterList url={crimeFetch} column={crimeColumnVals[0]} label="Weapons">
 		</FilterList>
         </div>
       </React.Fragment>)
@@ -31,6 +31,7 @@ class FilterList extends Component {
 	super(props);
 	this.url = this.props.url;
 	this.column = this.props.column;
+	this.label = this.props.label;
 	this.state = {
 	    data: [],
 	    dataFetched: false
@@ -49,13 +50,19 @@ class FilterList extends Component {
 	var dataValues = this.state.data;
 
 	var options = [];
+	var arrayLength = dataValues.length;
+	for (var i = 0; i < arrayLength; i++) {
+	    options.push((<FilterItem label={dataValues[i]}></FilterItem>));
+	    //Do something
+	}
+	console.log(options);
 	console.log("Here");
 	console.log(dataValues);
 	return (
 		<React.Fragment>
+		
 		<select>
-		<option value={dataValues[0]}>{dataValues[0]}
-		</option>
+		{options}
 		</select>
 		</React.Fragment>
 	)
@@ -63,13 +70,16 @@ class FilterList extends Component {
     
 }
 
-class FilterItem extends Component{
+class FilterItem extends Component {
     constructor(props){
 	super(props);
 	this.label = this.props.label;
     }
     render(){
-	return null;
+	return (
+		<option value={this.label}>{this.label}
+	        </option>
+	);
     }
 }
 
