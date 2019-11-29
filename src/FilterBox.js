@@ -106,7 +106,7 @@ class FilterList extends Component {
 	return (
 		<React.Fragment>
 		<h6 class="filter-label">{title}</h6>
-		<select class="filter-select" size="3" multiple>
+		<select class="filter-select" size="3" onChange={filterSelected} name={this.label} multiple>
 		{options}
 	        </select>
 		</React.Fragment>
@@ -145,4 +145,51 @@ async function getData(obj, url, column) {
     });
 }
 
+function filterSelected(){
+    console.log("Filters changed");
+    var filterSelects = document.getElementsByClassName("filter-select");
+    var allFilters = [];
+    for(var i = 0; i < filterSelects.length; i++){
+	
+	var newFilter = getSelectValues(filterSelects[i]);
+	if(newFilter)
+	    allFilters.push(newFilter);	
+    }
+    if(allFilters.length > 0){
+	var queryParams = buildQueryParams(allFilters);
+    }
+    console.log(buildQueryString(queryParams));
+}
+function getSelectValues(select) {
+    var result = []
+    var label = select.name;
+    var options = select && select.options;
+    var opt;
 
+    for (var i=0, iLen=options.length; i<iLen; i++) {
+	opt = options[i];
+
+	if (opt.selected) {
+	    result.push(opt.value || opt.text);
+	}
+    }
+    if(result.length == 0){
+	return null
+    }
+    return {column: label, filters: result};
+}
+
+function buildQueryParams(filters){
+    var queryparams = [];
+    for(var i = 0; i < filters.length; i++){
+	var currFilters = filters[i].filters.join();
+	var param = filters[i].column + "=" + currFilters;
+	queryparams.push(param);
+    }
+    return queryparams;
+    
+}
+
+function buildQueryString(params){
+    return params.join("&");
+}
