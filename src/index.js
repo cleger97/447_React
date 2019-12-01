@@ -13,7 +13,7 @@ import FilterManager from './FilterManager';
 //ReactDOM.render(<App />, document.getElementById('root'));
 
 //ReactDOM.render(<DataHandle />, document.getElementById('data'));
-//ReactDOM.render(<FilterManager />, document.getElementById('manager'));
+ReactDOM.render(<FilterManager />, document.getElementById('manager'));
 
 ReactDOM.render(<InOutChart />, document.getElementById('inoutchart'));
 

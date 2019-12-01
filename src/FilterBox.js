@@ -18,6 +18,15 @@ async function getAllFilters(){
     return filtersList;
 }
 
+function clearAll(){
+    var selects = document.getElementsByClassName("filter-select");
+    console.log(selects);
+    for(var i = 0; i < selects.length; i++){
+	selects[i].value = "";
+    }
+    filterSelected();
+}
+
 function titleCase(str) {
     var splitStr = str.toLowerCase().split(' ');
     for (var i = 0; i < splitStr.length; i++) {
@@ -67,6 +76,7 @@ export default class FilterBox extends Component {
 		</FilterList>,
 	    <FilterList data={this.state.data[0][6][0]} label={this.state.data[0][6][1]}>
 		</FilterList>,
+		<button onClick={clearAll}>Clear Filters</button>
 	];
 	
 	return (
@@ -78,6 +88,7 @@ export default class FilterBox extends Component {
 	    </div>
       </React.Fragment>)
     }
+    
 }
 
 class FilterList extends Component {
@@ -158,8 +169,11 @@ function filterSelected(){
     if(allFilters.length > 0){
 	var queryParams = buildQueryParams(allFilters);
     }
-    console.log(buildQueryString(queryParams));
+    console.log("Built filter: ", buildQueryString(queryParams));
 }
+
+
+
 function getSelectValues(select) {
     var result = []
     var label = select.name;
@@ -191,5 +205,11 @@ function buildQueryParams(filters){
 }
 
 function buildQueryString(params){
-    return params.join("&");
+    if(params){
+    var queryString = "?" + params.join("&");
+	return queryString;
+    }
+    else{
+	return "";
+    }
 }
