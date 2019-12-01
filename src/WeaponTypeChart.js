@@ -14,7 +14,8 @@ export default class WeaponTypeChart extends Component {
 
     this.state = {
       keys: [],
-      data: []
+	data: [],
+	ready: false
     };
 
     return;
@@ -22,10 +23,20 @@ export default class WeaponTypeChart extends Component {
   }
 
   componentDidMount() {
-    Promise.all([loadWeapons(this)]);
+      Promise.all([loadWeapons(this, this.props.filter)]);
   }
+    componentDidUpdate(oldProps){
+	if(this.props.filter != oldProps.filter){
+	    console.log("Found new filter: ", this.props.filter);
+	    Promise.all([loadWeapons(this, this.props.filter)]);
+	}
+    }
 
-  render() {
+    render() {
+
+	if(this.state.ready == false){
+	    return null;
+	}
     console.log(this.state.data);
     console.log(this.state.keys);
 
@@ -52,9 +63,11 @@ export default class WeaponTypeChart extends Component {
 }
 
 
-function loadWeapons(obj) {
-  console.log("Getting weapon list");
-  fetch(weaponFetch, {
+function loadWeapons(obj, filter) {
+    console.log("Getting weapon list");
+    filter = filter.replace("?", "&")
+    obj.setState({data: {}, keys: {}, ready: false});
+    fetch(weaponFetch + filter, {
       headers : { 
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -71,7 +84,8 @@ function loadWeapons(obj) {
 
       obj.setState({
         keys : keyVal,
-        data: values
+          data: values,
+	  ready: true
       });
 
       console.log(keyVal);
@@ -102,7 +116,7 @@ function enumerateData(obj, keys) {
     .then((res) => res.json())
     .then(data => {
       values.push(data);
-      obj.setState({data: values});
+	obj.setState({data: values});
       
       //console.log(obj.state.data);
       i++;

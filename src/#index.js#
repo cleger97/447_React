@@ -22,7 +22,7 @@ ReactDOM.render(<FilterManager />, document.getElementById('manager'));
 
 //ReactDOM.render(<HeatMap />, document.getElementById('heatmap'));
 
-//ReactDOM.render(<Timeline />, document.getElementById('timeline'));
+//ofReactDOM.render(<Timeline />, document.getElementById('timeline'));
 
 //ReactDOM.render(<FilterBox />, document.getElementById('dataForm'));
 

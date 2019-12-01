@@ -18,15 +18,6 @@ async function getAllFilters(){
     return filtersList;
 }
 
-function clearAll(){
-    var selects = document.getElementsByClassName("filter-select");
-    console.log(selects);
-    for(var i = 0; i < selects.length; i++){
-	selects[i].value = "";
-    }
-    filterSelected();
-}
-
 function titleCase(str) {
     var splitStr = str.toLowerCase().split(' ');
     for (var i = 0; i < splitStr.length; i++) {
@@ -47,12 +38,48 @@ export default class FilterBox extends Component {
 	    ready : false,
 	    data: null
 	}
+
+	//must bind the component functions to the current instance of the class
+	this.filterSelected = this.filterSelected.bind(this);
+	this.clearAll = this.clearAll.bind(this);
 	
     }
 
     componentDidMount(){
 	Promise.all([getAllFilters()]).then((filtersList) => {this.setState({ready: true, data: filtersList})});
     }
+
+    updateCharts(newFilter){
+	this.props.updateFilter(newFilter);
+    }
+
+    filterSelected(){
+	console.log("Filters changed");
+	var filterSelects = document.getElementsByClassName("filter-select");
+	var allFilters = [];
+	for(var i = 0; i < filterSelects.length; i++){
+	
+	    var newFilter = getSelectValues(filterSelects[i]);
+	    if(newFilter)
+		allFilters.push(newFilter);	
+	}
+	if(allFilters.length > 0){
+	    var queryParams = buildQueryParams(allFilters);
+	}
+	var queryString = buildQueryString(queryParams);
+	console.log("Built query: ", queryString);
+	this.props.update(queryString);
+    }
+
+    clearAll(){
+	var selects = document.getElementsByClassName("filter-select");
+	console.log(selects);
+	for(var i = 0; i < selects.length; i++){
+	    selects[i].value = "";
+	}
+	this.filterSelected();
+    }
+
 
     render() {
 
@@ -62,21 +89,21 @@ export default class FilterBox extends Component {
 
 	console.log(this.state.data[0])
 	this.componentList = [
-		<FilterList data={this.state.data[0][0][0]} label={this.state.data[0][0][1]}>
+		<FilterList data={this.state.data[0][0][0]} label={this.state.data[0][0][1]} update={this.filterSelected}>
 		</FilterList>,
-	    <FilterList data={this.state.data[0][1][0]} label={this.state.data[0][1][1]}>
+	    <FilterList data={this.state.data[0][1][0]} label={this.state.data[0][1][1]} update={this.filterSelected}>
 		</FilterList>,
-	    <FilterList data={this.state.data[0][2][0]} label={this.state.data[0][2][1]}>
+	    <FilterList data={this.state.data[0][2][0]} label={this.state.data[0][2][1]} update={this.filterSelected}>
 		</FilterList>,
-	    <FilterList data={this.state.data[0][3][0]} label={this.state.data[0][3][1]}>
+	    <FilterList data={this.state.data[0][3][0]} label={this.state.data[0][3][1]} update={this.filterSelected}>
 		</FilterList>,
-	    <FilterList data={this.state.data[0][4][0]} label={this.state.data[0][4][1]}>
+	    <FilterList data={this.state.data[0][4][0]} label={this.state.data[0][4][1]} update={this.filterSelected}>
 		</FilterList>,
-	    <FilterList data={this.state.data[0][5][0]} label={this.state.data[0][5][1]}>
+	    <FilterList data={this.state.data[0][5][0]} label={this.state.data[0][5][1]} update={this.filterSelected}>
 		</FilterList>,
-	    <FilterList data={this.state.data[0][6][0]} label={this.state.data[0][6][1]}>
+	    <FilterList data={this.state.data[0][6][0]} label={this.state.data[0][6][1]} update={this.filterSelected}> 
 		</FilterList>,
-		<button onClick={clearAll}>Clear Filters</button>
+		<button onClick={this.clearAll}>Clear Filters</button>
 	];
 	
 	return (
@@ -104,20 +131,19 @@ class FilterList extends Component {
     }
 
     render() {
-		
+
+	
 	var options = [];
-	console.log("Making filters out of ", this.props.data);
 	for (var i = 0; i < this.props.data.length; i++) {
 	    options.push((<FilterItem label={this.props.data[i]}></FilterItem>));
 	}
 
 	var title = titleCase(this.label);
-	console.log(options);
-	console.log("Here");
+	
 	return (
 		<React.Fragment>
 		<h6 class="filter-label">{title}</h6>
-		<select class="filter-select" size="3" onChange={filterSelected} name={this.label} multiple>
+		<select class="filter-select" size="3" onChange={this.props.update}  name={this.label} multiple>
 		{options}
 	        </select>
 		</React.Fragment>
@@ -156,21 +182,6 @@ async function getData(obj, url, column) {
     });
 }
 
-function filterSelected(){
-    console.log("Filters changed");
-    var filterSelects = document.getElementsByClassName("filter-select");
-    var allFilters = [];
-    for(var i = 0; i < filterSelects.length; i++){
-	
-	var newFilter = getSelectValues(filterSelects[i]);
-	if(newFilter)
-	    allFilters.push(newFilter);	
-    }
-    if(allFilters.length > 0){
-	var queryParams = buildQueryParams(allFilters);
-    }
-    console.log("Built filter: ", buildQueryString(queryParams));
-}
 
 
 
