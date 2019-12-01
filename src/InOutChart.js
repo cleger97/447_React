@@ -2,57 +2,64 @@ import React, {Component} from 'react';
 import ChartJS from 'chart.js';
 import {Doughnut} from 'react-chartjs-2';
 
-var insideFetch = 'http://ec2-34-228-208-5.compute-1.amazonaws.com/count/?inside_outside=Inside';
-var outsideFetch = 'http://ec2-34-228-208-5.compute-1.amazonaws.com/count/?inside_outside=Outside';
-
+var insideOutsideFetch = 'http://ec2-34-228-208-5.compute-1.amazonaws.com/column-count/?column=inside_outside';
 
 export default class InOutChart extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      jsonExists: false,
-      keys: ["inside", "outside"],
-      data: [0, 0]
+      ready: false,
+      keys: [],
+      data: []
     };
-    Promise.all([getInside(this), getOutside(this)]);
     
   }
 
-  render() {
-    var dataValues = this.state.data;
-    var data = {
-        labels: this.state.keys,
-        datasets: [{
-          data: this.state.data,
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)'
-          ]
-        }]
-      } 
-    var options = {
-      maintainAspectRatio : false
-    }
-    return (
-      <React.Fragment>
-        <h5> Crimes by Location </h5>
-        <div class = 'fill'>
-          <Doughnut data = {data} options = {options}  />
-        </div>
-      
+  componentDidMount() {
+      Promise.all([getData(this, this.props.filter)]);
+  }
     
+  componentDidUpdate(oldProps){
+      if(this.props.filter != oldProps.filter){
+	  this.setState({data: {}, keys: {}, ready: false});
+	  Promise.all([getData(this, this.props.filter)]);
+      }
+  }
+    
+  render() {
 
-      </React.Fragment>
-    );
+      if(this.state.ready == false){
+	  return null;
+      }
+      var dataValues = this.state.data;
+      var data = {
+          labels: this.state.keys,
+          datasets: [{
+              data: this.state.data,
+              backgroundColor: [
+		  'rgba(255, 99, 132, 0.2)',
+		  'rgba(54, 162, 235, 0.2)'
+              ]
+          }]
+      } 
+      var options = {
+	  maintainAspectRatio : false
+      }
+      return (
+	      <React.Fragment>
+              <div class = 'fill'>
+              <Doughnut data = {data} options = {options}  />
+              </div>
+	      </React.Fragment>
+      );
   }
 }
 
+function getData(obj, filter){
 
-function getInside(obj) {
-  var inside = 0;
-  var isDone = false;
-  fetch(insideFetch, {
+    filter = filter.replace("?", "&");
+    fetch(insideOutsideFetch + filter, {
       headers : { 
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -61,29 +68,8 @@ function getInside(obj) {
     })
     .then((res) => res.json())
     .then(data => {
-      console.log(data);
-      inside = data;
-      obj.setState({ data : [inside, obj.state.data[1]]});
-    });
-    
-}
-
-function getOutside(obj) {
-  var outside;
-  fetch(outsideFetch, {
-      headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-       }
-
-    })
-    .then((res) => {
-      return res.json();
-    })
-    .then(data => {
-      console.log(data);
-      outside = data;
-      obj.setState({ data : [obj.state.data[0], outside]});
-    });
-    return outside;
+	var keyVals = Object.keys(data);
+	var values = Object.values(data);
+	obj.setState({ data : values, keys : keyVals, ready: true});
+    });    
 }

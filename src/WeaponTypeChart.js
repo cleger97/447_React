@@ -53,7 +53,6 @@ export default class WeaponTypeChart extends Component {
     
     return (
       <React.Fragment>
-        <h5> Crimes by Weapon Type </h5>
         <div class = 'fill'>
           <Doughnut data = {data} options = {options} redraw />
         </div>

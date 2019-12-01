@@ -33,10 +33,12 @@ export default class FilterManager extends Component {
 
 		<div class = "row test">
 		<div id="inoutchart" class="col-md-3 test box">
-		<InOutChart></InOutChart>
+		<h5> Crimes by Location </h5>
+		<InOutChart filter={this.state.filter}></InOutChart>
 		</div>
 		
-		<div id="weaponchart" class="col-md-3 test box">.col-md-3
+		<div id="weaponchart" class="col-md-3 test box">
+		<h5> Crimes by Weapon Type </h5>
 		<WeaponTypeChart filter={this.state.filter}></WeaponTypeChart>
 		</div>
 		
