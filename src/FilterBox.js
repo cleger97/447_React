@@ -43,6 +43,7 @@ export default class FilterBox extends Component {
 	this.filterSelected = this.filterSelected.bind(this);
 	this.clearAll = this.clearAll.bind(this);
 	this.currentFilters = {};
+	this.removeFilter = this.removeFilter.bind(this);
     }
 
     componentDidMount(){
@@ -54,7 +55,35 @@ export default class FilterBox extends Component {
     }
 
     removeFilter(event){
-	console.log(event);
+	var tableScroll = document.getElementById("filter-show-scroll");
+	tableScroll.removeChild(event.originalTarget);
+	console.log(event)
+
+	var curr_sel = document.getElementById(event.target.filterid);
+	if(curr_sel == null){
+	    curr_sel = document.getElementsByClassName("time-select")
+	}
+	
+	if(event.target.filterid == "crimetime_range"){
+	    curr_sel[0].value = ""
+	    curr_sel[1].value = ""
+	}else{
+	    console.log("Currsel ", curr_sel)
+	    for(var i = 0; i < curr_sel.options.length; i++){
+		console.log(curr_sel.options[i].value, event.target.value);
+		if(curr_sel.options[i].value == event.target.value){
+		    curr_sel.options[i].selected = false;
+		}
+	    }
+	}
+	
+	if(!(tableScroll.firstChild)){
+	    var table = document.getElementById("filter-show");
+	    console.log("TABLE ", table);
+	    table.setAttribute('hidden', "");
+	}
+
+	this.filterSelected();
     }
 
     filterSelected(){
@@ -89,12 +118,14 @@ export default class FilterBox extends Component {
 	console.log("Built query: ", queryString);
 	console.log("With filters: ", allFilters);
 
+	//setup the clear filter table
 	if(queryString){
 	    var table = document.getElementById("filter-show");
 	    console.log("TABLE ", table);
 	    table.removeAttribute('hidden');
 	    var tableScroll = document.getElementById("filter-show-scroll");
-	    console.log("Clearing scroll table ", tableScroll);
+	    
+	    //remove all the previous buttons
 	    while (tableScroll.firstChild) {
 		console.log("Removing ", tableScroll.firstChild);
 		tableScroll.removeChild(tableScroll.firstChild);
@@ -136,6 +167,9 @@ export default class FilterBox extends Component {
 	this.props.update(queryString);
     }
 
+    //clearAll function
+    //
+    //Used as a callback on the clear filters button to clear all the filters and reset the views
     clearAll(){
 	var cleared = false
 	
@@ -160,6 +194,9 @@ export default class FilterBox extends Component {
 	    this.filterSelected();
     }
 
+    //render function
+    //
+    //Used to render all of the html and react components that handle the filtering
     render() {
 
 	if (this.state.ready == false){
@@ -238,7 +275,7 @@ class FilterList extends Component {
 	return (
 		<React.Fragment>
 		<h6 class="filter-label">{title}</h6>
-		<select class="filter-select" size="3" onChange={this.props.update}  name={this.label} multiple>
+		<select class="filter-select" size="3" id={this.label} onChange={this.props.update}  name={this.label} multiple>
 		{options}
 	        </select>
 		</React.Fragment>
