@@ -74,10 +74,17 @@ export default class FilterBox extends Component {
     clearAll(){
 	var selects = document.getElementsByClassName("filter-select");
 	console.log(selects);
+	var cleared = false
 	for(var i = 0; i < selects.length; i++){
+	    if(selects[i].value != ""){
+		console.log("Found cleared value");
+		cleared = true;
+	    }
 	    selects[i].value = "";
 	}
-	this.filterSelected();
+	//Only update filters if a value has been cleared
+	if(cleared)
+	    this.filterSelected();
     }
 
 
