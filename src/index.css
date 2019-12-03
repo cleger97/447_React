@@ -57,7 +57,30 @@ code {
 }
 
 .filter-select {
-    color: red;
     font-size: x-small;
-    width: 200px;
+    width: 100%;
 }
+
+.clear-button{
+    width: 100%;
+}
+
+.time-select{
+    width: 50%;
+}
+
+.aligned input{
+    float: left;
+    font-size: x-small;
+}
+
+.time-label{
+    font-size: small;
+    width: 100%;
+}
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-var crimeColumnVals = ["weapon",  "crimecode", "description"]
+var crimeColumnVals = ["weapon", "description"]
 var locationColumnVals = ["neighborhood", "post", "district", "premise"]
 var crimeFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/crime-column-value/";
 var locationFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/location-column-value/";
@@ -38,11 +38,11 @@ export default class FilterBox extends Component {
 	    ready : false,
 	    data: null
 	}
-
+	
 	//must bind the component functions to the current instance of the class
 	this.filterSelected = this.filterSelected.bind(this);
 	this.clearAll = this.clearAll.bind(this);
-	
+	this.currentFilters = {};
     }
 
     componentDidMount(){
@@ -61,32 +61,60 @@ export default class FilterBox extends Component {
 	
 	    var newFilter = getSelectValues(filterSelects[i]);
 	    if(newFilter)
-		allFilters.push(newFilter);	
+		allFilters.push(newFilter);
 	}
+		
 	if(allFilters.length > 0){
 	    var queryParams = buildQueryParams(allFilters);
 	}
 	var queryString = buildQueryString(queryParams);
+
+	
+	var timeSelects = document.getElementsByClassName("time-select");
+	var newFilter = getTimeValues(timeSelects);
+	if(newFilter && queryString){
+	    queryString = queryString + "&" + newFilter;
+	} else if(newFilter && !queryString){
+	    queryString = "?" + newFilter;
+	}
+	
 	console.log("Built query: ", queryString);
+	if(queryString){
+	    var table = document.getElementById("filter-show");
+	    console.log("TABLE ", table);
+	    table.removeAttribute('hidden');
+	    
+	} else{
+	    var table = document.getElementById("filter-show");
+	    console.log("TABLE ", table);
+	    table.setAttribute('hidden', "");
+	}
 	this.props.update(queryString);
     }
 
     clearAll(){
-	var selects = document.getElementsByClassName("filter-select");
-	console.log(selects);
 	var cleared = false
+	
+	var selects = document.getElementsByClassName("filter-select");
 	for(var i = 0; i < selects.length; i++){
 	    if(selects[i].value != ""){
-		console.log("Found cleared value");
 		cleared = true;
 	    }
 	    selects[i].value = "";
 	}
+
+	var times = document.getElementsByClassName("time-select");
+	for(var i = 0; i < times.length; i++){
+	    if(times[i].value != ""){
+		cleared = true;
+	    }
+	    times[i].value = "";
+	}
+	
 	//Only update filters if a value has been cleared
 	if(cleared)
 	    this.filterSelected();
     }
-
 
     render() {
 
@@ -108,11 +136,24 @@ export default class FilterBox extends Component {
 		</FilterList>,
 	    <FilterList data={this.state.data[0][5][0]} label={this.state.data[0][5][1]} update={this.filterSelected}>
 		</FilterList>,
-	    <FilterList data={this.state.data[0][6][0]} label={this.state.data[0][6][1]} update={this.filterSelected}> 
-		</FilterList>,
-		<button onClick={this.clearAll}>Clear Filters</button>
+
+	<h6 class="time-label">Min-Max Time</h6>,
+		<div class="aligned">
+
+	    <input id="max-time" class="time-select" type="time" onChange={this.filterSelected}>
+		</input>
+	    <input id="min-time" class="time-select" type="time" onChange={this.filterSelected}>
+ 		</input>
+
+	</div>,
+		
+ 	    <button onClick={this.clearAll} class='clear-button'>Clear Filters
+	    </button>,
+		<div id="filter-show" style={{overflow: "scroll"}} hidden>
+		</div>
+		
 	];
-	
+
 	return (
       <React.Fragment>
 		<h5> Filters:  </h5>
@@ -131,6 +172,7 @@ class FilterList extends Component {
 	this.label = this.props.label;
 	this.state = {
 	};
+
     }
 
     componentDidMount(){
@@ -230,4 +272,37 @@ function buildQueryString(params){
     else{
 	return "";
     }
+}
+
+function getTimeValues(time){
+    var label = "crimetime_range";
+    var minInput = time[0].value;
+    var maxInput = time[1].value;
+    
+    if (minInput && maxInput) {
+	var min = minInput + ":00";
+	var max = maxInput + ":00"
+    } else if(minInput) {
+	var min = minInput + ":00";
+	var max = "23:59:59";
+    } else if(maxInput) {
+	var min = "00:00:00";
+	var max = maxInput + ":00";
+    } else {
+	return null;
+    }
+
+    var minDate = Date.parse("1/1/2019 " + min);
+    var maxDate = Date.parse("1/1/2019 " + max);
+
+    //reset min to max if it is greater than max
+    if(minDate > maxDate){
+	console.log("Resetting min");
+	time[0].value = maxInput;
+	min = max;
+    }
+
+
+    var time_range = min + "," + max
+    return label+"="+time_range;
 }
