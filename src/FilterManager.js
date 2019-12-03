@@ -21,7 +21,10 @@ export default class FilterManager extends Component {
 
     render(){
 	return (<React.Fragment>
-		<div class = 'mw-100 test bar'>topSize</div>
+		<div class = 'mw-100 test bar' id="header-div">
+		<h1 class="header" style={{"font-size": "48px"}}>Touch Point Baltimore</h1>
+		<h1 class="header" style={{"font-size": "28px", "padding-left": "8px"}}>Crime Data Visualizer</h1>
+		</div>
 
 		<div id="dataForm" class="col-md-2 test side">
 		<FilterBox update={this.updateFilter}></FilterBox>

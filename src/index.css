@@ -1,15 +1,20 @@
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: white;
+  font-family: Arial;
+  color: white;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#header-div{
+    background-color: #0B0B61;
 }
 
 .data { 
@@ -23,6 +28,11 @@ code {
 .rowTest {
   border-style: solid;
   color: red;
+
+}
+
+.header{
+    color: #F7F8E0;
 }
 
 .fill {
@@ -30,8 +40,32 @@ code {
   width : 100%;
 }
 
-.row {
+#timeline{
+    color:black;
+    border-color: white;
+    background-color: #E6E6E6;
+    border-width: 5px;
+}
 
+#weaponchart{
+    color:black;
+    border-color: white;
+    background-color: #E6E6E6;
+    border-width: 5px;
+}
+
+#inoutchart{
+    color:black;
+    border-color: white;
+    border-width: 5px;
+    background-color: #E6E6E6;
+}
+
+#dataForm{
+    color: #F7F8E0;
+    border-color: white;
+    background-color: #0B0B61;
+    border-width: 5px;
 }
 
 .box {
@@ -39,18 +73,22 @@ code {
   display: flex;
   flex-direction: column;
   /*max-height: 30vh; */
+  background-color: whitesmoke;
 }
 
 .side {
-  height: 90vh;
+  height: 90vh; 
   /*max-height: 90vh; */
   float: right;
 }
 
 .bar {
-  height: 10vh;
-  max-height: 10vh;
+  height: 17vh;
+  max-height: 17vh;
+  padding: 1em;
+  background-color: #ddd;
 }
+
 
 .filter-label{
     font-size: small;

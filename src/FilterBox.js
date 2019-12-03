@@ -66,6 +66,7 @@ export default class FilterBox extends Component {
 	
 	if(event.target.filterid == "crimetime_range"){
 	    curr_sel[0].value = ""
+
 	    curr_sel[1].value = ""
 	}else{
 	    console.log("Currsel ", curr_sel)
@@ -121,22 +122,19 @@ export default class FilterBox extends Component {
 	//setup the clear filter table
 	if(queryString){
 	    var table = document.getElementById("filter-show");
-	    console.log("TABLE ", table);
 	    table.removeAttribute('hidden');
 	    var tableScroll = document.getElementById("filter-show-scroll");
 	    
 	    //remove all the previous buttons
 	    while (tableScroll.firstChild) {
-		console.log("Removing ", tableScroll.firstChild);
 		tableScroll.removeChild(tableScroll.firstChild);
 	    }
-	    console.log("Cleared table scroll", tableScroll);
 	    for(var i = 0; i < allFilters.length; i++){
+		//found list box element, parse individually
 		if(typeof allFilters[i] != "string"){
 		    
 		    var values = allFilters[i].filters
-		    console.log(values);
-		    
+			    
 		    for(var j = 0; j < values.length; j++){
 			var element = document.createElement("button");
 			element.classList.add("filter-show-button");
@@ -148,6 +146,7 @@ export default class FilterBox extends Component {
 		    }
 		    
 		}else{
+		    //found time slot element, parse as a whole min-max
 		    var element = document.createElement("button");
 		    element.classList.add("filter-show-button");
 		    element.innerHTML = allFilters[i].split("=").join(": ");
@@ -232,14 +231,14 @@ export default class FilterBox extends Component {
 	    </button>,
 		<div id="filter-show" hidden>
 		<h6 class="small-label">Current Filters:</h6>
-		<div id="filter-show-scroll" style={{overflow: "scroll"}} data={this.currentFilters}><button></button> </div>
+		<div id="filter-show-scroll" style={{overflow: "scroll", height: "100px"}} data={this.currentFilters}><button></button> </div>
 		</div>
 		
 	];
 
 	return (
       <React.Fragment>
-		<h5> Filters:  </h5>
+		<h5 id="filter-title"> Filters:  </h5>
         <div class = 'fill' id = 'filter-box'>
 
 	    {this.componentList}
@@ -349,7 +348,14 @@ function buildQueryParams(filters){
 
 function buildQueryString(params){
     if(params){
-    var queryString = "?" + params.join("&");
+	for(var i = 0; i < params.length; i++){
+	    console.log("Current parameter: ", params[i]);
+	    params[i] = sanitizeParam(params[i]);
+	    console.log(params[i]);
+	}
+
+	
+	var queryString = "?" + params.join("&");
 	return queryString;
     }
     else{
@@ -388,4 +394,11 @@ function getTimeValues(time){
 
     var time_range = min + "," + max
     return label+"="+time_range;
+}
+
+function sanitizeParam(param){
+    //hacky and slow, should be replaced with regular expression for
+    //speed
+    param = param.split("&").join("%26");
+    return param;
 }
