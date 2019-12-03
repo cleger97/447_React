@@ -74,9 +74,12 @@ code {
     font-size: x-small;
 }
 
-.time-label{
+.small-label{
     font-size: small;
-    width: 100%;
+}
+
+.filter-show-button{
+    font-size: xx-small;
 }
 
 

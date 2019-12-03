@@ -53,8 +53,14 @@ export default class FilterBox extends Component {
 	this.props.updateFilter(newFilter);
     }
 
+    removeFilter(event){
+	console.log(event);
+    }
+
     filterSelected(){
 	console.log("Filters changed");
+
+	//get the values from the selects
 	var filterSelects = document.getElementsByClassName("filter-select");
 	var allFilters = [];
 	for(var i = 0; i < filterSelects.length; i++){
@@ -69,25 +75,59 @@ export default class FilterBox extends Component {
 	}
 	var queryString = buildQueryString(queryParams);
 
-	
+	//get the values from the min and max time
 	var timeSelects = document.getElementsByClassName("time-select");
 	var newFilter = getTimeValues(timeSelects);
 	if(newFilter && queryString){
 	    queryString = queryString + "&" + newFilter;
+	    allFilters.push(newFilter);
 	} else if(newFilter && !queryString){
 	    queryString = "?" + newFilter;
+	    allFilters.push(newFilter);
 	}
 	
 	console.log("Built query: ", queryString);
+	console.log("With filters: ", allFilters);
+
 	if(queryString){
 	    var table = document.getElementById("filter-show");
 	    console.log("TABLE ", table);
 	    table.removeAttribute('hidden');
+	    var tableScroll = document.getElementById("filter-show-scroll");
+	    console.log("Clearing scroll table ", tableScroll);
+	    while (tableScroll.firstChild) {
+		console.log("Removing ", tableScroll.firstChild);
+		tableScroll.removeChild(tableScroll.firstChild);
+	    }
+	    console.log("Cleared table scroll", tableScroll);
+	    for(var i = 0; i < allFilters.length; i++){
+		if(typeof allFilters[i] != "string"){
+		    var values = allFilters[i].filters
+		    for(var i = 0; i < values.length; i++){
+			var element = document.createElement("button");
+			element.classList.add("filter-show-button");
+			element.innerHTML = allFilters[i].column + ": " + values[i];
+			element.filterid = allFilters[i].column
+			element.value = values[i];
+			element.addEventListener('click', this.removeFilter);
+			tableScroll.appendChild(element);
+		    }
+		}else{
+		    var element = document.createElement("button");
+		    element.classList.add("filter-show-button");
+		    element.innerHTML = allFilters[i].split("=").join(": ");
+		    element.filterid = allFilters[i].split("=")[0];
+		    element.value = allFilters[i].split("=")[1];
+		    element.addEventListener('click', this.removeFilter);
+		    tableScroll.appendChild(element);
+		}
+	    }
 	    
 	} else{
 	    var table = document.getElementById("filter-show");
 	    console.log("TABLE ", table);
 	    table.setAttribute('hidden', "");
+	    
 	}
 	this.props.update(queryString);
     }
@@ -137,7 +177,7 @@ export default class FilterBox extends Component {
 	    <FilterList data={this.state.data[0][5][0]} label={this.state.data[0][5][1]} update={this.filterSelected}>
 		</FilterList>,
 
-	<h6 class="time-label">Min-Max Time</h6>,
+	<h6 class="small-label">Min-Max Time</h6>,
 		<div class="aligned">
 
 	    <input id="max-time" class="time-select" type="time" onChange={this.filterSelected}>
@@ -149,7 +189,9 @@ export default class FilterBox extends Component {
 		
  	    <button onClick={this.clearAll} class='clear-button'>Clear Filters
 	    </button>,
-		<div id="filter-show" style={{overflow: "scroll"}} hidden>
+		<div id="filter-show" hidden>
+		<h6 class="small-label">Current Filters:</h6>
+		<div id="filter-show-scroll" style={{overflow: "scroll"}} data={this.currentFilters}><button></button> </div>
 		</div>
 		
 	];
