@@ -102,16 +102,20 @@ export default class FilterBox extends Component {
 	    console.log("Cleared table scroll", tableScroll);
 	    for(var i = 0; i < allFilters.length; i++){
 		if(typeof allFilters[i] != "string"){
+		    
 		    var values = allFilters[i].filters
-		    for(var i = 0; i < values.length; i++){
+		    console.log(values);
+		    
+		    for(var j = 0; j < values.length; j++){
 			var element = document.createElement("button");
 			element.classList.add("filter-show-button");
-			element.innerHTML = allFilters[i].column + ": " + values[i];
+			element.innerHTML = allFilters[i].column + ": " + values[j];
 			element.filterid = allFilters[i].column
-			element.value = values[i];
+			element.value = values[j];
 			element.addEventListener('click', this.removeFilter);
 			tableScroll.appendChild(element);
 		    }
+		    
 		}else{
 		    var element = document.createElement("button");
 		    element.classList.add("filter-show-button");
