@@ -56,7 +56,8 @@ export default class FilterBox extends Component {
 
     removeFilter(event){
 	var tableScroll = document.getElementById("filter-show-scroll");
-	tableScroll.removeChild(event.originalTarget);
+	console.log(event);
+	tableScroll.removeChild(event.target);
 	console.log(event)
 
 	var curr_sel = document.getElementById(event.target.filterid);
@@ -141,7 +142,7 @@ export default class FilterBox extends Component {
 			element.innerHTML = allFilters[i].column + ": " + values[j];
 			element.filterid = allFilters[i].column
 			element.value = values[j];
-			element.addEventListener('click', this.removeFilter);
+			element.addEventListener('click', this.removeFilter, {once: true});
 			tableScroll.appendChild(element);
 		    }
 		    
