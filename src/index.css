@@ -73,7 +73,7 @@ code {
   display: flex;
   flex-direction: column;
   /*max-height: 30vh; */
-  background-color: whitesmoke;
+  background-color: #E6E6E6;
 }
 
 .side {
@@ -85,6 +85,7 @@ code {
 .bar {
   height: 17vh;
   max-height: 17vh;
+  min-height:17vh;
   padding: 1em;
   background-color: #ddd;
 }
@@ -97,16 +98,19 @@ code {
 .filter-select {
     font-size: x-small;
     width: 100%;
+    background-color: #E6E6E6;
 }
 
 .clear-button{
     width: 100%;
     margin-top: 8px;
     margin-bottom: 8px;
+    background-color: #E6E6E6;
 }
 
 .time-select{
     width: 50%;
+    background-color: #E6E6E6;
 }
 
 .aligned input{
@@ -120,11 +124,16 @@ code {
 
 .filter-show-button{
     font-size: xx-small;
+    background-color: #E6E6E6;
 }
 
 .leaflet-container {
     height: 100%;
     width: 100%;
+}
+
+.filter-title{
+    color: #E6E6E6;
 }
 
 #filter-box {
@@ -143,10 +152,11 @@ code {
     border: 16px solid #f3f3f3; /* Light grey */
     border-top: 16px solid #3498db; /* Blue */
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-    position: relative;
+    width: 100px;
+    height: 100px;
+    animation: spin 1s linear infinite;
+    margin: auto;
+    margin-top: 100%;
 }
 
 @keyframes spin {

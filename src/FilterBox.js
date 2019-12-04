@@ -201,8 +201,9 @@ export default class FilterBox extends Component {
 
 	if (this.state.ready == false){
 	    return(
-		    <React.Fragment>
-		     <div class="loader"></div> 
+		    <React.Fragment><div class="fill">
+		    <div class="loader"></div>
+		    </div>
 		    </React.Fragment>
 	    )
 	}
