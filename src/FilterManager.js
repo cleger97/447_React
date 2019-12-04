@@ -35,32 +35,35 @@ export default class FilterManager extends Component {
 		</div>
 
 		<div class = "row test">
-		<div id="inoutchart" class="col-md-3 test box">
-		<h5> Crimes by Location </h5>
-		<InOutChart filter={this.state.filter}></InOutChart>
+		    <div class = "col-md-6">
+		   <div class = "row">
+		    <div id="inoutchart" class="col-md-6 test box">
+		        <h5> Crimes by Location </h5>
+		        <InOutChart filter={this.state.filter}></InOutChart>
+                    </div>
+				<div id="lol2" class="col-md-6 test box"></div>
+		</div>
+		<div class = "row">
+		<div id="lol" class="col-md-6 test box"></div>
+				    <div id="weaponchart" class="col-md-6 test box">
+		        <h5> Crimes by Weapon Type </h5>
+		        <WeaponTypeChart filter={this.state.filter}></WeaponTypeChart>
+		</div>
+
+
 		</div>
 		
-		<div id="weaponchart" class="col-md-3 test box">
-		<h5> Crimes by Weapon Type </h5>
-		<WeaponTypeChart filter={this.state.filter}></WeaponTypeChart>
+		
+		    </div>
+		    <div id="heatmap" class="col-md-6 test box">
+		       <HeatMap></HeatMap>
+		    </div>
+		
 		</div>
+
 		
-		<div id="heatmap" class="col-md-3 test box">
-		<HeatMap></HeatMap>
-		</div>
-		
-		<div id="data2" class="col-md-3 test box">.col-md-3</div>
-		</div>
-		<div class = "row test">
-		<div id="data" class="col-md-3 test box">.col-md-3</div>
-		
-		<div id="data" class="col-md-3 test box">.col-md-3</div>
-		
-		<div id="data" class="col-md-3 test box">.col-md-3</div>
-		
-		<div id="data" class="col-md-3 test box">.col-md-3</div>
-		</div>
 	       </React.Fragment>);
     }
+
     
 }
