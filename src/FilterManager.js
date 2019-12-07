@@ -56,7 +56,7 @@ export default class FilterManager extends Component {
 		
 		    </div>
 		    <div id="heatmap" class="col-md-6 test box">
-		       <HeatMap></HeatMap>
+		<HeatMap filter={this.state.filter}></HeatMap>
 		    </div>
 		
 		</div>
