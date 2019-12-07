@@ -3,6 +3,10 @@ import React, {Component} from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import HeatmapLayer from './HeatmapLayer';
 
+const addressPoints = [[39.29, -76.60, "999"],
+		 [39.295, -76.60, "999"],
+		 [39.298, -76.605, "999"],
+		 [39.292, -76.646, "999"]];
 
 export default class HeatMap extends Component {
 
@@ -12,21 +16,35 @@ export default class HeatMap extends Component {
 	    lat: 39.2904,
 	    lng: -76.6122,
 	    zoom: 11,
-	    radius: 100,
-	    blur: 100,
+
+	    mapHidden: false,
+	    layerHidden: false,
+	    addressPoints,
+	    radius: 18,
+	    blur: 8,
 	    max: 0.5,
-	    layerHidden: false
+	    limitAddressPoints: true,  
 	}
     }
 
-    addressPoints = [[39.29, -76.60, "1"],
-		     [39.295, -76.60, "1"],
-		     [39.298, -76.605, "1"],
-		     [39.292, -76.646, "1"]];
-    
+
+        
     render() {
 	const position = [this.state.lat, this.state.lng];
 
+
+	if (this.state.mapHidden) {
+	    return (
+		    <div>
+		    <input
+		type="button"
+		value="Toggle Map"
+		onClick={() => this.setState({ mapHidden: !this.state.mapHidden })}
+		    />
+		    </div>
+	    );
+	}
+	
 	const gradient = {
 	    0.1: '#89BDE0', 0.2: '#96E3E6', 0.4: '#82CEB6',
 	    0.6: '#FAF3A5', 0.8: '#F5D98B', '1.0': '#DE9A96'
@@ -65,7 +83,37 @@ export default class HeatMap extends Component {
 		</Popup>
 		</Marker>
 		</Map>
+
 		
+		<input
+	    type="button"
+	    value="Toggle Heatmap"
+	    onClick={() => this.setState({ layerHidden: !this.state.layerHidden })}
+	        />
+		
+
+	        <div style={{"color":"black"}}>
+		Radius
+	        <input
+	    type="range"
+	    min={1}
+	    max={40}
+	    value={this.state.radius}
+	    onChange={(e) => this.setState({ radius: e.currentTarget.value })}
+	        /> {this.state.radius}
+	    </div>
+
+	        <div style={{"color":"black"}}>
+		Blur
+	        <input 
+	    type="range"
+	    min={1}
+	    max={20}
+	    value={this.state.blur}
+	    onChange={(e) => this.setState({ blur: e.currentTarget.value })}
+	        /> {this.state.blur}
+	    </div>
+	    
 		</React.Fragment>
 	);
     }
