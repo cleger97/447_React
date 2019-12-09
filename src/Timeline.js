@@ -123,9 +123,58 @@ function getSimpleFetch(obj, filter) {
           retData.push(inData);
         }
 
-        colorList.push(genRandColor(0.8));
+        //colorList.push(genRandColor(0.8));
       });
     });
+
+    // calculate colors
+    var total = 0, count = 0, avg = 0;
+    var min = 0, max = 0;
+    retData.forEach((data) => {
+      total += data;
+      count++;
+      if (data < min) {
+        min = data;
+      } 
+      if (data > max) {
+        max = data;
+      }
+    });
+    // calculate an average color
+    avg = total / count;
+
+    var color = "rgb(0, 0, 0, 0.8)";
+    var cVal = 0.0;
+    retData.forEach((data) => {
+      var diff = data - avg;
+
+      if (diff > 0) {
+        // should be red
+
+        // get on a scale from 0 to 1
+        cVal = (diff) / (max - avg);
+        // multiply by color
+        cVal *= 255;
+        cVal = Math.floor(cVal);
+
+        color = "rgba(" + cVal + ", 0, 0, 0.8)";
+
+        colorList.push(color);
+      } else {
+        // blue.
+        cVal = (diff) / (min - avg);
+        cVal *= 255;
+        cVal *= 1;
+
+        cVal = Math.floor(cVal);
+
+        color = "rgba( 0," + cVal + ", 0, 0.8)";
+
+        colorList.push(color);
+      }
+
+    });
+
 
     obj.setState({ keys: retKeys, data: retData, colors: colorList, ready: true})
   });
