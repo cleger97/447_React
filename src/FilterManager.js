@@ -19,6 +19,10 @@ export default class FilterManager extends Component {
 	this.setState({filter: newFilter});
     }
 
+    switchMapType(){
+	
+    }
+
     render(){
 	return (<React.Fragment>
 		<div class = 'mw-100 test bar' id="header-div">
@@ -55,7 +59,10 @@ export default class FilterManager extends Component {
 		
 		
 		    </div>
-		    <div id="heatmap" class="col-md-6 test box">
+		<div id="heatmap" class="col-md-6 test box">
+		<div align="right">
+		<button>Switch Type</button>
+		</div>
 		<HeatMap filter={this.state.filter}></HeatMap>
 		    </div>
 		
@@ -67,3 +74,4 @@ export default class FilterManager extends Component {
 
     
 }
+
