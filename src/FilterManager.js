@@ -31,7 +31,7 @@ export default class FilterManager extends Component {
 		</div>
 
 		<div id = "timeline" class = "col-md-10 test box">
-		<Timeline></Timeline>
+		<Timeline filter={this.state.filter} />
 		</div>
 
 		<div class = "row test">
