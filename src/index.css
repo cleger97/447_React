@@ -73,7 +73,7 @@ code {
   display: flex;
   flex-direction: column;
   /*max-height: 30vh; */
-  background-color: whitesmoke;
+  background-color: #E6E6E6;
 }
 
 .side {
@@ -85,6 +85,7 @@ code {
 .bar {
   height: 17vh;
   max-height: 17vh;
+  min-height:17vh;
   padding: 1em;
   background-color: #ddd;
 }
@@ -97,14 +98,19 @@ code {
 .filter-select {
     font-size: x-small;
     width: 100%;
+    background-color: #E6E6E6;
 }
 
 .clear-button{
     width: 100%;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    background-color: #E6E6E6;
 }
 
 .time-select{
     width: 50%;
+    background-color: #E6E6E6;
 }
 
 .aligned input{
@@ -118,10 +124,67 @@ code {
 
 .filter-show-button{
     font-size: xx-small;
+    background-color: #E6E6E6;
 }
 
+.leaflet-container {
+    height: 100%;
+    width: 100%;
+}
 
+.filter-title{
+    color: #E6E6E6;
+}
 
+#filter-box {
+    margin-top: 25px;
+    font-size: 21px;
+    text-align: center;
 
+    -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 2s; /* Firefox < 16 */
+    -ms-animation: fadein 2s; /* Internet Explorer */
+    -o-animation: fadein 2s; /* Opera < 12.1 */
+    animation: fadein 2s;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    animation: spin 1s linear infinite;
+    margin: auto;
+    margin-top: 100%;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
 
 

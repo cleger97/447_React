@@ -200,7 +200,12 @@ export default class FilterBox extends Component {
     render() {
 
 	if (this.state.ready == false){
-	    return null;
+	    return(
+		    <React.Fragment><div class="fill">
+		    <div class="loader"></div>
+		    </div>
+		    </React.Fragment>
+	    )
 	}
 
 	console.log(this.state.data[0])
@@ -228,7 +233,7 @@ export default class FilterBox extends Component {
 
 	</div>,
 		
- 	    <button onClick={this.clearAll} class='clear-button'>Clear Filters
+ 		<button onClick={this.clearAll} class='clear-button'>Clear Filters
 	    </button>,
 		<div id="filter-show" hidden>
 		<h6 class="small-label">Current Filters:</h6>
@@ -238,10 +243,10 @@ export default class FilterBox extends Component {
 	];
 
 	return (
-      <React.Fragment>
-		<h5 id="filter-title"> Filters:  </h5>
-        <div class = 'fill' id = 'filter-box'>
+		<React.Fragment>
 
+        <div class = 'fill' id = 'filter-box'>
+		<h5 id="filter-title"> Filters:  </h5>
 	    {this.componentList}
 	    </div>
       </React.Fragment>)
