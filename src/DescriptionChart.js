@@ -37,10 +37,7 @@ export default class DescriptionChart extends Component {
           labels: this.state.keys,
           datasets: [{
               data: this.state.data,
-              backgroundColor: [
-		  'rgba(255, 99, 132, 0.2)',
-		  'rgba(54, 162, 235, 0.2)'
-              ]
+              backgroundColor: 'rgba(255, 99, 132, 0.2)'
           }]
       }
       
@@ -50,15 +47,23 @@ export default class DescriptionChart extends Component {
 	      xAxes: [
 		  {
 		      ticks: {
-			  fontSize: 8,
+			  fontSize: 9,
+			  fontColor: "black",
 		      }
 		  }
 	
 	      ],
 	      yAxes: [
-	
+		  {
+		      ticks: {
+		          display: false
+		      }
+		  }
 	      ]
-	  }	  
+	  },
+	  legend: {
+	      display: false,
+	  }
       }
       return (
 	      <React.Fragment>

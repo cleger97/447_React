@@ -47,7 +47,8 @@ export default class FilterManager extends Component {
 		        <InOutChart filter={this.state.filter}></InOutChart>
                 </div>
 		
-		<div class="col-md-6 test box">
+		<div id="descriptionchart" class="col-md-6 test box">
+		<h5> Crimes by Type </h5>
 		<DescriptionChart filter={this.state.filter}></DescriptionChart>
 		</div>
 

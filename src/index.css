@@ -61,6 +61,13 @@ code {
     background-color: #E6E6E6;
 }
 
+#descriptionchart{
+    color:black;
+    border-color: white;
+    border-width: 5px;
+    background-color: #E6E6E6;
+}
+
 #dataForm{
     color: #F7F8E0;
     border-color: white;
