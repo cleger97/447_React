@@ -4,6 +4,7 @@ import InOutChart from './InOutChart'
 import WeaponTypeChart from './WeaponTypeChart'
 import HeatMap from './heatmap';
 import Timeline from './Timeline';
+import DescriptionChart from './DescriptionChart'
 
 export default class FilterManager extends Component {
 
@@ -44,8 +45,12 @@ export default class FilterManager extends Component {
 		    <div id="inoutchart" class="col-md-6 test box">
 		        <h5> Crimes by Location </h5>
 		        <InOutChart filter={this.state.filter}></InOutChart>
-                    </div>
-				<div id="lol2" class="col-md-6 test box"></div>
+                </div>
+		
+		<div class="col-md-6 test box">
+		<DescriptionChart filter={this.state.filter}></DescriptionChart>
+		</div>
+
 		</div>
 		<div class = "row">
 		<div id="lol" class="col-md-6 test box"></div>

@@ -224,7 +224,7 @@ function getData(obj, filter){
     })
     .then((res) => res.json())
 	.then(data => {
-	    if(data.length == 0){
+	    if(data.length < 5){
 		data = null;
 	    }
 
