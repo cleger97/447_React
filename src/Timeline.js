@@ -41,6 +41,7 @@ export default class Timeline extends Component {
     console.log(this.state.keys);
     console.log(this.state.data);
 
+    // TODO: set scale
     var data = {
       labels: this.state.keys,
       datasets: [{
@@ -120,6 +121,7 @@ function getSimpleFetch(obj, filter) {
         if (inData == null) {
           retData.push(0);
         } else {
+          
           retData.push(inData);
         }
 
@@ -129,8 +131,11 @@ function getSimpleFetch(obj, filter) {
 
     // calculate colors
     var total = 0, count = 0, avg = 0;
-    var min = 0, max = 0;
+    var min = Number.MAX_SAFE_INTEGER, max = 0;
     retData.forEach((data) => {
+      if (data == 0) {
+        return;
+      }
       total += data;
       count++;
       if (data < min) {
@@ -146,33 +151,78 @@ function getSimpleFetch(obj, filter) {
     var color = "rgb(0, 0, 0, 0.8)";
     var cVal = 0.0;
     retData.forEach((data) => {
-      var diff = data - avg;
+      var diff = data - min;
+      
+      /*
+      cVal = (diff) / (max - min);
+      
+      cVal = (1 - cVal);
+      console.log(cVal);
+      cVal *= 255;
+      cVal = Math.abs(Math.floor(cVal));
 
-      if (diff > 0) {
+      //cVal = (cVal > 192) ? 192 : cVal;
+
+      color = "rgba(255, " + cVal + ", " + cVal + ", 0.8)";
+
+      colorList.push(color);
+      */
+      
+      var justOneColor = false;
+
+      if (diff > (avg - min)) {
         // should be red
 
         // get on a scale from 0 to 1
-        cVal = (diff) / (max - avg);
+        cVal = (data) / (max - min);
+
+        // subtract the average.
+        cVal -= (avg) / (max - min);
+        console.log(cVal);
         // multiply by color
         cVal *= 255;
+
+        // invert -> to get whiteness intensity
+        cVal = (255 - cVal);
         cVal = Math.floor(cVal);
 
-        color = "rgba(" + cVal + ", 0, 0, 0.8)";
+        if (justOneColor) {
+          cVal = 0;
+        }
 
+        color = "rgba(255, " + cVal + ", " + cVal + ", 0.8)";    
+
+        console.log(data + " " + avg + " " + cVal);
         colorList.push(color);
       } else {
         // blue.
-        cVal = (diff) / (min - avg);
+        cVal = (data) / (max - min);
+
+        // add the average
+        
+        cVal -= (avg) / (max - min);
+
+        console.log(cVal);
         cVal *= 255;
-        cVal *= 1;
+        cVal *= -1;
+
+        // invert -> should be white values
+        cVal = (255 - cVal);
 
         cVal = Math.floor(cVal);
 
-        color = "rgba( 0," + cVal + ", 0, 0.8)";
+        // green
+        // color = "rgba(" + cVal + ", 255 ," + cVal + ", 0.8)";
 
+        if (justOneColor) {
+          cVal = 0;
+        }
+
+        color = "rgba(" + cVal + ", " + cVal + ", 255, 0.8)";
+
+        console.log(data + " " + avg + " " + cVal);
         colorList.push(color);
-      }
-
+      } 
     });
 
 
