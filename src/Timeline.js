@@ -101,18 +101,18 @@ function getSimpleFetch(obj, filter) {
     //console.log(Object.keys(data));
 
     yearSet.forEach((key) => {
-      console.log(key);
+      //console.log(key);
       if (data[key] == null) { 
         for (var i = 1; i < 13; i++) {
           retKeys.push(key + " " + i);
           retData.push(0);
-          colorList.push(genRandColor(0.8));
+          //colorList.push(genRandColor(0.8));
         }
         return;
       }
       monthSet.forEach((key2, value2) => {
 
-        console.log(key2 + " " + data[key][key2]);
+        //console.log(key2 + " " + data[key][key2]);
         var inKey = key + " " + key2;
         var inData = data[key][key2];
         
@@ -148,11 +148,21 @@ function getSimpleFetch(obj, filter) {
     // calculate an average color
     avg = total / count;
 
+    console.log(avg - min);
+
     var color = "rgb(0, 0, 0, 0.8)";
     var cVal = 0.0;
     retData.forEach((data) => {
+      if (data === 0) {
+        colorList.push("rgb(0, 0, 0, 0.8)");
+        return;
+      }
+
       var diff = data - min;
-      
+
+      console.log(diff);
+
+     
       /*
       cVal = (diff) / (max - min);
       
@@ -175,11 +185,17 @@ function getSimpleFetch(obj, filter) {
         // should be red
 
         // get on a scale from 0 to 1
-        cVal = (data) / (max - min);
+        if (max !== min) {
+          cVal = (data) / (max - min);
 
-        // subtract the average.
-        cVal -= (avg) / (max - min);
-        console.log(cVal);
+          // subtract the average.
+          cVal -= (avg) / (max - min);
+        }
+        else {
+          cVal = maxColor;
+        }
+        
+        //console.log(cVal);
         // multiply by color
         cVal *= 255;
 
@@ -195,17 +211,21 @@ function getSimpleFetch(obj, filter) {
 
         color = "rgba(255, " + cVal + ", " + cVal + ", 0.8)";    
 
-        console.log(data + " " + avg + " " + cVal);
+        //console.log(data + " " + avg + " " + cVal);
         colorList.push(color);
       } else {
         // blue.
-        cVal = (data) / (max - min);
+        if (max !== min) {
+          cVal = (data) / (max - min);
 
-        // add the average
-        
-        cVal -= (avg) / (max - min);
+          // subtract the average.
+          cVal += (avg) / (max - min);
+        }
+        else {
+          cVal = maxColor;
+        }
 
-        console.log(cVal);
+        //console.log(cVal);
         cVal *= 255;
         cVal *= -1;
 
@@ -225,12 +245,12 @@ function getSimpleFetch(obj, filter) {
 
         color = "rgba(" + cVal + ", " + cVal + ", 255, 0.8)";
 
-        console.log(data + " " + avg + " " + cVal);
+        //console.log(data + " " + avg + " " + cVal);
         colorList.push(color);
       } 
     });
 
-
+    console.log(colorList);
     obj.setState({ keys: retKeys, data: retData, colors: colorList, ready: true})
   });
 
