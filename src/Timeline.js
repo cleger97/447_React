@@ -38,8 +38,8 @@ export default class Timeline extends Component {
     if (this.state.ready == false) {
       return null;
     }
-    console.log(this.state.keys);
-    console.log(this.state.data);
+    //console.log(this.state.keys);
+    //console.log(this.state.data);
 
     // TODO: set scale
     var data = {
@@ -163,7 +163,7 @@ function getSimpleFetch(obj, filter) {
 
       var diff = data - min;
 
-      console.log(diff);
+      //console.log(diff);
 
      
       /*
@@ -253,7 +253,7 @@ function getSimpleFetch(obj, filter) {
       } 
     });
 
-    console.log(colorList);
+    //console.log(colorList);
     obj.setState({ keys: retKeys, data: retData, colors: colorList, ready: true})
   });
 
