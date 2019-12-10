@@ -169,6 +169,7 @@ function getSimpleFetch(obj, filter) {
       */
       
       var justOneColor = false;
+      var maxColor = 64;
 
       if (diff > (avg - min)) {
         // should be red
@@ -189,6 +190,8 @@ function getSimpleFetch(obj, filter) {
         if (justOneColor) {
           cVal = 0;
         }
+
+        cVal = (cVal > maxColor) ? maxColor : cVal;
 
         color = "rgba(255, " + cVal + ", " + cVal + ", 0.8)";    
 
@@ -217,6 +220,8 @@ function getSimpleFetch(obj, filter) {
         if (justOneColor) {
           cVal = 0;
         }
+
+        cVal = (cVal > maxColor) ? maxColor : cVal;
 
         color = "rgba(" + cVal + ", " + cVal + ", 255, 0.8)";
 
