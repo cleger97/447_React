@@ -50,7 +50,10 @@ export default class Timeline extends Component {
       }]
     }
     var options = {
-      maintainAspectRatio : false
+      maintainAspectRatio : false,
+      legend: {
+        display: false
+      }
     }
 
 
