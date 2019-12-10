@@ -5,6 +5,7 @@ import WeaponTypeChart from './WeaponTypeChart'
 import HeatMap from './heatmap';
 import Timeline from './Timeline';
 import DescriptionChart from './DescriptionChart'
+import TimeChart from './TimeChart'
 
 export default class FilterManager extends Component {
 
@@ -54,10 +55,14 @@ export default class FilterManager extends Component {
 
 		</div>
 		<div class = "row">
-		<div id="lol" class="col-md-6 test box"></div>
-				    <div id="weaponchart" class="col-md-6 test box">
-		        <h5> Crimes by Weapon Type </h5>
-		        <WeaponTypeChart filter={this.state.filter}></WeaponTypeChart>
+
+		<div id="timechart" class="col-md-6 test box">
+		<TimeChart filter={this.state.filter}></TimeChart>
+		</div>
+
+		<div id="weaponchart" class="col-md-6 test box">
+		<h5> Crimes by Weapon Type </h5>
+		<WeaponTypeChart filter={this.state.filter}></WeaponTypeChart>
 		</div>
 
 
