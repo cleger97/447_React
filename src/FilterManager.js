@@ -55,11 +55,12 @@ export default class FilterManager extends Component {
 
 		</div>
 		<div class = "row">
-
+		
 		<div id="timechart" class="col-md-6 test box">
+		<h5> Crimes by Time of Day </h5>
 		<TimeChart filter={this.state.filter}></TimeChart>
 		</div>
-
+		
 		<div id="weaponchart" class="col-md-6 test box">
 		<h5> Crimes by Weapon Type </h5>
 		<WeaponTypeChart filter={this.state.filter}></WeaponTypeChart>

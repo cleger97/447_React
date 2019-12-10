@@ -13,8 +13,14 @@ code {
     monospace;
 }
 
+@font-face {
+    font-family: mismo;
+    src: url('./fonts/Mismo Campus.ttf');
+}
+
 #header-div{
-    background-color: #0B0B61;
+    background-color: #2B2B75;
+    font-family: mismo;
 }
 
 .data { 
@@ -68,10 +74,17 @@ code {
     background-color: #E6E6E6;
 }
 
+#timechart{
+    color:black;
+    border-color: white;
+    border-width: 5px;
+    background-color: #E6E6E6;
+}
+
 #dataForm{
     color: #F7F8E0;
     border-color: white;
-    background-color: #0B0B61;
+    background-color:  #2B2B75;
     border-width: 5px;
 }
 
