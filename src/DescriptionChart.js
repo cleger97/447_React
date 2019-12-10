@@ -32,12 +32,22 @@ export default class DescriptionChart extends Component {
       if(this.state.ready == false){
 	  return null;
       }
-      var dataValues = this.state.data;
+
+      var keys = this.state.keys;
+      var backgroundColors = [];
+      var minOpacity = 1/keys.length;
+      var currOpacity = minOpacity;
+      for(var i = 0; i < keys.length; i++){
+	  backgroundColors.push('rgba(255, 0, 0, ' + currOpacity + ')')
+	  currOpacity += minOpacity;
+      }
+      
+      
       var data = {
           labels: this.state.keys,
           datasets: [{
               data: this.state.data,
-              backgroundColor: 'rgba(255, 99, 132, 0.2)'
+              backgroundColor: backgroundColors
           }]
       }
       
