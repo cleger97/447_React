@@ -42,11 +42,22 @@ export default class TimeChart extends Component {
 	      fill: false,
 	      lineTension: 0,
 	      borderColor: "#f00",
+	      
           }]
       }
       
       var options = {
 	  maintainAspectRatio : false,
+	  scales: {
+	      yAxes: [
+		  {
+		      ticks: {
+			  min: 0,
+			  stepSize: 1
+		      }
+		  }
+	      ]
+	  },
       }
       return (
 	      <React.Fragment>
