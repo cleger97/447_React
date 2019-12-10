@@ -38,8 +38,8 @@ export default class InOutChart extends Component {
           datasets: [{
               data: this.state.data,
               backgroundColor: [
-		  'rgba(255, 99, 132, 0.2)',
-		  'rgba(54, 162, 235, 0.2)'
+		  'rgba(255, 64, 64, 0.8)',
+		  'rgba(64, 64, 255, 0.8)'
               ]
           }]
       } 
