@@ -161,6 +161,7 @@ export default class HeatMap extends Component {
 	     radius={Number(this.state.radius)}
 	     blur={Number(this.state.blur)}
 	     max={Number.parseFloat(this.state.max)}
+	     minOpacity={20}
 	     />
 	    }
 
