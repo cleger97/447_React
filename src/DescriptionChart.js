@@ -35,9 +35,10 @@ export default class DescriptionChart extends Component {
 
       var keys = this.state.keys;
       var backgroundColors = [];
-      var minOpacity = 1/keys.length;
+      var minOpacity = 0.55/keys.length;
       var currOpacity = minOpacity;
       for(var i = 0; i < keys.length; i++){
+	  console.log(currOpacity);
 	  backgroundColors.push('rgba(255, 0, 0, ' + currOpacity + ')')
 	  currOpacity += minOpacity;
       }

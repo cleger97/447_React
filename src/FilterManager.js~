@@ -1,9 +1,0 @@
-import React, {Component} from 'react';
-
-export default class FilterManager extends Component {
-
-    render(){
-	return null;
-    }
-    
-}

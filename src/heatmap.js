@@ -21,8 +21,8 @@ export default class HeatMap extends Component {
 	    mapHidden: false,
 	    layerHidden: false,
 	    addressPoints,
-	    radius: 18,
-	    blur: 8,
+	    radius: 10,
+	    blur: 15,
 	    max: 0.5,
 	    limitAddressPoints: true,
 	    data:{},
@@ -98,30 +98,7 @@ export default class HeatMap extends Component {
 	    value="Toggle Heatmap"
 	    onClick={() => this.setState({ layerHidden: !this.state.layerHidden })}
 	        />
-		
-
-	        <div style={{"color":"black"}}>
-		Radius
-	        <input
-	    type="range"
-	    min={1}
-	    max={40}
-	    value={this.state.radius}
-	    onChange={(e) => this.setState({ radius: e.currentTarget.value })}
-	        /> {this.state.radius}
-	    </div>
-
-	        <div style={{"color":"black"}}>
-		Blur
-	        <input 
-	    type="range"
-	    min={1}
-	    max={20}
-	    value={this.state.blur}
-	    onChange={(e) => this.setState({ blur: e.currentTarget.value })}
-	        /> {this.state.blur}
-	    </div>
-	    
+			    
 		</React.Fragment>
 
 	    );
@@ -186,27 +163,7 @@ export default class HeatMap extends Component {
 	        />
 		
 
-	        <div style={{"color":"black"}}>
-		Radius
-	        <input
-	    type="range"
-	    min={1}
-	    max={40}
-	    value={this.state.radius}
-	    onChange={(e) => this.setState({ radius: e.currentTarget.value })}
-	        /> {this.state.radius}
-	    </div>
-
-	        <div style={{"color":"black"}}>
-		Blur
-	        <input 
-	    type="range"
-	    min={1}
-	    max={20}
-	    value={this.state.blur}
-	    onChange={(e) => this.setState({ blur: e.currentTarget.value })}
-	        /> {this.state.blur}
-	    </div>
+	        
 	    
 		</React.Fragment>
 	);

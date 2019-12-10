@@ -49,6 +49,21 @@ export default class TimeChart extends Component {
       var options = {
 	  maintainAspectRatio : false,
 	  scales: {
+	      xAxes:[{
+		  title: "time",
+		  type: 'time',
+		  gridLines: {
+		      lineWidth: 2
+		  },
+		  time: {
+		      unit: "day",
+		      unitStepSize: 1000,
+		      displayFormats: {
+			  minute: 'HH:MM:SS',
+		      }
+		  }
+	      }]
+	      ,
 	      yAxes: [
 		  {
 		      ticks: {
@@ -58,6 +73,9 @@ export default class TimeChart extends Component {
 		  }
 	      ]
 	  },
+	  legend: {
+	      display: false,
+	  }
       }
       return (
 	      <React.Fragment>
