@@ -38,11 +38,10 @@ export default class TimeChart extends Component {
           labels: this.state.keys,
           datasets: [{
               data: this.state.data,
-	      pointStyle: "line",
+	      pointStyle: "circle",
 	      fill: false,
 	      lineTension: 0,
 	      borderColor: "#f00",
-	      
           }]
       }
       
@@ -50,16 +49,13 @@ export default class TimeChart extends Component {
 	  maintainAspectRatio : false,
 	  scales: {
 	      xAxes:[{
-		  title: "time",
+		  distribution: "linear",
 		  type: 'time',
-		  gridLines: {
-		      lineWidth: 2
-		  },
 		  time: {
-		      unit: "day",
-		      unitStepSize: 1000,
+		      unit: "hour",
+		      unitStepSize: 1,
 		      displayFormats: {
-			  minute: 'HH:MM:SS',
+			  second: 'h:mm:ss',
 		      }
 		  }
 	      }]
@@ -98,9 +94,27 @@ function getData(obj, filter){
  
     })
     .then((res) => res.json())
-    .then(data => {
-	var keyVals = Object.keys(data);
-	var values = Object.values(data);
-	obj.setState({ data : values, keys : keyVals, ready: true});
+	.then(data => {
+
+	    var keyVals = Object.keys(data);
+	    var labels = [];
+	    //create new time labels with correct hour but arbitrary date (unused)
+	    for(var i = 0; i < 24; i++){
+		labels.push(new Date("2000", "01", "01", i.toString(), "00", "00"))
+	    }
+	    //placeholder of 0 for unused times
+	    var labelData = new Array(24).fill(0);
+	    
+	    var values = Object.values(data);
+	    var dateValues = [];
+	    //add up all the times by hour into their resepctive hour bucket
+	    for(var i = 0; i < keyVals.length; i++){
+		
+		var splitStr = keyVals[i].split(":")
+		var dateTime = new Date("2000", "01", "01", splitStr[0], splitStr[1], splitStr[2]);
+		labelData[dateTime.getHours()] += values[i];
+		dateValues.push(dateTime);
+	    }
+	    obj.setState({ data : labelData, keys : labels, ready: true});
     });    
 }

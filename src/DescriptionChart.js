@@ -99,7 +99,9 @@ function getData(obj, filter){
     .then((res) => res.json())
     .then(data => {
 	var keyVals = Object.keys(data);
+	
 	var values = Object.values(data);
+	
 	obj.setState({ data : values, keys : keyVals, ready: true});
     });    
 }
