@@ -38,33 +38,35 @@ export default class TimeChart extends Component {
           labels: this.state.keys,
           datasets: [{
               data: this.state.data,
-	      pointStyle: "circle",
+	      pointStyle: "dot",
 	      fill: false,
 	      lineTension: 0,
-	      borderColor: "#f00",
+	      borderColor: "#ff6464",
           }]
       }
       
       var options = {
 	  maintainAspectRatio : false,
+	  tooltips: {
+	      titleFontSize: 0,
+	  },
 	  scales: {
 	      xAxes:[{
 		  distribution: "linear",
 		  type: 'time',
 		  time: {
-		      unit: "hour",
-		      unitStepSize: 1,
+		      unit: "second",
+		      unitStepSize: 3600,
 		      displayFormats: {
-			  second: 'h:mm:ss',
+			  second: 'h:mm a',
 		      }
-		  }
+		  }, 
 	      }]
 	      ,
 	      yAxes: [
 		  {
 		      ticks: {
 			  min: 0,
-			  stepSize: 1
 		      }
 		  }
 	      ]
