@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
-var allInstancesFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/crimeinstances/";
+var allInstancesFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/latitude-longitude-all/";
 export default class PointMap extends Component {
 
     constructor() {
@@ -72,9 +72,29 @@ export default class PointMap extends Component {
 	    );
 	}
 
+	var points = [];
 	var data = this.state.data.results;
 	var lats_longs = [];
-	console.log(data);
+	var labels = [];
+	console.log(data)
+	for(var i = 0; i < data.length; i++){
+	    var point_position = [data[i]["latitude"], data[i]["longitude"]]
+	    var date = "Date: " + data[i].crimedate
+	    var time = "Time: " + data[i].crimetime
+	    var desc = "Description" + data[i].description
+		
+	    points.push(
+		<Marker position={point_position}>
+		<Popup>
+		    {date}
+		{time}
+		{desc}
+		</Popup>
+		</Marker>
+	    )
+	}
+	console.log(points)
+	
 	
 	return (
 		<React.Fragment>
@@ -87,11 +107,7 @@ export default class PointMap extends Component {
 	    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 	    url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 	        />
-		<Marker position={position}>
-		<Popup>
-		A pretty CSS3 popup. <br/> Easily customizable.
-		</Popup>
-		</Marker>
+		{points}
 		</Map>
 	    
 		</React.Fragment>
