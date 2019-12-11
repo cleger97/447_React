@@ -14,7 +14,7 @@ export default class PointMap extends Component {
 
 	    mapHidden: false,
 	    layerHidden: false,
-	    addressPoints,
+	    
 	    radius: 18,
 	    blur: 8,
 	    max: 0.5,
@@ -72,23 +72,13 @@ export default class PointMap extends Component {
 	    );
 	}
 
-
-
-	if (this.state.mapHidden) {
-	    return (
-		    <div>
-		    <input
-		type="button"
-		value="Toggle Map"
-		onClick={() => this.setState({ mapHidden: !this.state.mapHidden })}
-		    />
-		    </div>
-	    );
-	}
+	var data = this.state.data.results;
+	var lats_longs = [];
+	console.log(data);
 	
 	return (
 		<React.Fragment>
-		<h5 style={{"color":"black"}}>Heatmap</h5>
+		<h5 style={{"color":"black"}}>Pointmap</h5>
 		
 	        <Map center={position} zoom={this.state.zoom}>
 
