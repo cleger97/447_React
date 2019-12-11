@@ -38,19 +38,19 @@ export default class FilterManager extends Component {
 		<FilterBox update={this.updateFilter}></FilterBox>
 		</div>
 
-		<div id = "timeline" class = "col-md-10 test box">
+		<div id = "timeline" class = "col-md-10 test box chart">
 		<Timeline filter={this.state.filter} />
 		</div>
 
 		<div class = "row test">
 		    <div class = "col-md-6">
 		   <div class = "row">
-		    <div id="inoutchart" class="col-md-6 test box">
+		    <div id="inoutchart" class="col-md-6 test box chart">
 		        <h5> Crimes by Location </h5>
 		        <InOutChart filter={this.state.filter}></InOutChart>
                 </div>
 		
-		<div id="descriptionchart" class="col-md-6 test box">
+		<div id="descriptionchart" class="col-md-6 test box chart">
 		<h5> Crimes by Type </h5>
 		<DescriptionChart filter={this.state.filter}></DescriptionChart>
 		</div>
@@ -58,12 +58,12 @@ export default class FilterManager extends Component {
 		</div>
 		<div class = "row">
 		
-		<div id="timechart" class="col-md-6 test box">
+		<div id="timechart" class="col-md-6 test box chart">
 		<h5> Crimes by Time of Day </h5>
 		<TimeChart filter={this.state.filter}></TimeChart>
 		</div>
 		
-		<div id="weaponchart" class="col-md-6 test box">
+		<div id="weaponchart" class="col-md-6 test box chart">
 		<h5> Crimes by Weapon Type </h5>
 		<WeaponTypeChart filter={this.state.filter}></WeaponTypeChart>
 		</div>
@@ -73,7 +73,7 @@ export default class FilterManager extends Component {
 		
 		
 		    </div>
-		<div id="heatmap" class="col-md-6 test box">
+		<div id="heatmap" class="col-md-6 test box chart">
 		<div align="right">
 		<button>Switch Type</button>
 		</div>
