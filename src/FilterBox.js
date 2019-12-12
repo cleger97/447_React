@@ -231,6 +231,15 @@ export default class FilterBox extends Component {
 	    <input id="min-time" class="time-select" type="time" onChange={this.filterSelected}>
  		</input>
 
+	    </div>,
+	    	<h6 class="small-label">Min-Max Time</h6>,
+		<div class="aligned">
+
+	    <input id="max-time" class="time-select" type="time" onChange={this.filterSelected}>
+		</input>
+	    <input id="min-time" class="time-select" type="time" onChange={this.filterSelected}>
+ 		</input>
+
 	</div>,
 		
  		<button onClick={this.clearAll} class='clear-button'>Clear Filters
@@ -280,7 +289,7 @@ class FilterList extends Component {
 	return (
 		<React.Fragment>
 		<h6 class="filter-label">{title}</h6>
-		<select class="filter-select" size="3" id={this.label} onChange={this.props.update}  name={this.label} multiple>
+		<select class="filter-select" size="4" id={this.label} onChange={this.props.update}  name={this.label} multiple>
 		{options}
 	        </select>
 		</React.Fragment>

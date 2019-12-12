@@ -57,6 +57,7 @@ export default class TimeChart extends Component {
 	      	borderColor: "#ff6464",
 		  }]
 		  
+
       }
       
       var options = {
