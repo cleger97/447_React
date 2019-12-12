@@ -7,7 +7,7 @@ export default class PointMap extends Component {
     constructor() {
 	super()
 	this.state = {
-	         ready: false,
+	    ready: false,
 	    lat: 39.2904,
 	    lng: -76.6122,
 	    zoom: 11,
@@ -15,12 +15,12 @@ export default class PointMap extends Component {
 	    mapHidden: false,
 	    layerHidden: false,
 	    
-	    radius: 18,
-	    blur: 8,
 	    max: 0.5,
 	    limitAddressPoints: true,
 	    data:{},
 	}
+	this.getNext = this.getNext.bind(this)
+	this.getPrev = this.getPrev.bind(this)
     }
 
     componentDidMount() {
@@ -34,7 +34,18 @@ export default class PointMap extends Component {
       }
     }
     
-
+    getNext(){
+	if(this.state.data["next"] != null){
+	    var page = this.state.data["next"]
+	    Promise.all([getData(this, this.props.filter, page)]);
+	}
+    }
+    getPrev(){
+	if(this.state.data["previous"] != null){
+	    var page = this.state.data["previous"]
+	    Promise.all([getData(this, this.props.filter, page)]);
+	}
+    }
 
         
     render() {
@@ -108,17 +119,26 @@ export default class PointMap extends Component {
 	    url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 	        />
 		{points}
-		</Map>
-	    
+	    </Map>
+		<div style={{"align": "left"}}>
+		<button onClick={this.getPrev}>Prev</button>
+		<button onClick={this.getNext}>Next</button>
+		</div>
 		</React.Fragment>
 	);
     }
     
 }
 
-function getData(obj, filter){
-
-    fetch(allInstancesFetch + filter, {
+function getData(obj, filter, page){
+    
+    if(page == null){
+	var url = allInstancesFetch + filter
+    }
+    else{
+	var url = page
+    }
+    fetch(url, {
       headers : { 
         'Content-Type': 'application/json',
         'Accept': 'application/json',
