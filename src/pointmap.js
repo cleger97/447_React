@@ -11,7 +11,7 @@ export default class PointMap extends Component {
 	    lat: 39.2904,
 	    lng: -76.6122,
 	    zoom: 11,
-
+	    maxPage: 0,
 	    mapHidden: false,
 	    layerHidden: false,
 	    
@@ -21,6 +21,7 @@ export default class PointMap extends Component {
 	}
 	this.getNext = this.getNext.bind(this)
 	this.getPrev = this.getPrev.bind(this)
+	this.setPage = this.setPage.bind(this)
     }
 
     componentDidMount() {
@@ -44,6 +45,23 @@ export default class PointMap extends Component {
 	if(this.state.data["previous"] != null){
 	    var page = this.state.data["previous"]
 	    Promise.all([getData(this, this.props.filter, page)]);
+	}
+    }
+
+    setPage(){
+
+	
+	var page_in = document.getElementById("page-input");
+	var page_changed = page_in.value
+	if(page_changed != null && page_changed != "" && page_changed >= 0 ){
+	    if(page_changed <= this.state.maxPage){
+		console.log(page_in, page_changed)
+		Promise.all([getData(this, this.props.filter, null, page_changed)])
+	    }
+	    else if(page_changed > this.state.maxPage){
+		page_in.value = this.state.maxPage;
+		Promise.all([getData(this, this.props.filter, null, page_in.value)])
+	    }
 	}
     }
 
@@ -83,6 +101,7 @@ export default class PointMap extends Component {
 	    );
 	}
 
+	
 	var points = [];
 	var data = this.state.data.results;
 	var lats_longs = [];
@@ -93,7 +112,7 @@ export default class PointMap extends Component {
 	    var date = "Date: " + data[i].crimedate
 	    var time = "Time: " + data[i].crimetime
 	    var desc = "Description" + data[i].description
-		
+	    lats_longs.push(point_position);
 	    points.push(
 		<Marker position={point_position}>
 		<Popup>
@@ -105,8 +124,15 @@ export default class PointMap extends Component {
 	    )
 	}
 	console.log(points)
-	
-	
+	if(lats_longs.length > 0){
+	    var minPoint = lats_longs[0]
+	    var maxPoint = lats_longs[lats_longs.length - 1]
+	}
+	else{
+	    var maxPoint = [0, 0];
+	    var minPoint = [0, 0];
+	}
+	console.log(minPoint, maxPoint);
 	return (
 		<React.Fragment>
 		<h5 style={{"color":"black"}}>Pointmap</h5>
@@ -121,8 +147,13 @@ export default class PointMap extends Component {
 		{points}
 	    </Map>
 		<div style={{"align": "left"}}>
+		<div style={{"display": "flex"}}>
 		<button onClick={this.getPrev}>Prev</button>
 		<button onClick={this.getNext}>Next</button>
+		<input id="page-input" onChange={this.setPage} style={{"width": "70px"}} type="number" min="1" max={this.state.maxPage} defaultValue="1"></input>
+		<h6 style={{"padding": "2px"}}>/{this.state.maxPage}</h6>
+		</div>
+		<h6 style={{"font-size": "small", "padding": "2px"}}>Showing: Latitudes: ({minPoint[0]},{maxPoint[0]}), Longitudes: ({minPoint[1]},{maxPoint[1]}) </h6>
 		</div>
 		</React.Fragment>
 	);
@@ -130,10 +161,19 @@ export default class PointMap extends Component {
     
 }
 
-function getData(obj, filter, page){
+function getData(obj, filter, page, page_changed){
     
     if(page == null){
-	var url = allInstancesFetch + filter
+	if(page_changed == null){
+	    var url = allInstancesFetch + filter
+	}
+	else{
+	    if(filter == "" || filter == null)
+		var url = allInstancesFetch  + "?page=" + page_changed;
+	    else{
+		var url = allInstancesFetch  + filter + "&page=" + page_changed;
+	    }
+	}
     }
     else{
 	var url = page
@@ -146,9 +186,27 @@ function getData(obj, filter, page){
  
     })
     .then((res) => res.json())
-    .then(data => {
-	obj.setState({ data : data,
-		       ready: true,
-		     });
+	.then(data => {
+	    console.log(url)
+	    //calculate number of pages
+	    var count = data["count"];
+	    var page_num = Math.ceil(count/100);
+	    var page_in = document.getElementById("page-input");
+	    //if current url contains page, pull it out of the url
+	    if(page_in != null && url.includes("page=")){
+		var pre_page = url.split("page=")[1]
+		var end = pre_page.indexOf("&")
+		if(end == -1 || end == null)
+		    end = pre_page.length
+		page_in.value = parseInt(pre_page.substring(0, end));
+	    }
+	    //if current url does not contain page, we are on page 1
+	    else if(page_in != null){
+		page_in.value = 1;
+	    }
+	    obj.setState({ data : data,
+			   ready: true,
+			   maxPage: page_num
+			 });
     });    
 }
