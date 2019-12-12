@@ -32,15 +32,29 @@ export default class DescriptionChart extends Component {
       if(this.state.ready == false){
 	  return null;
       }
+      
+      //start color is the blue value in array so can be calculated
+      var startColor = [64, 64, 255, 0.8];
+      //use this as last element
+      var endColor = "rgba(255, 64, 64, 0.8)";
 
-      var keys = this.state.keys;
-      var backgroundColors = [];
-      var minOpacity = 0.55/keys.length;
-      var currOpacity = minOpacity;
-      for(var i = 0; i < keys.length; i++){
-	  console.log(currOpacity);
-	  backgroundColors.push('rgba(255, 0, 0, ' + currOpacity + ')')
-	  currOpacity += minOpacity;
+      var colors = [];
+      //calculate color gradient based on amount of items
+      if(this.state.keys.length > 0){
+	  var newGrad = (255 - 64) / this.state.keys.length;
+      }
+
+      for(var i = 0; i < this.state.keys.length; i++){
+	  //last itemis the pure red color of our schema
+	  if(i + 1 == this.state.keys.length){
+	      colors.push(endColor);
+	  }
+	  //calculate new color based on gradient
+	  else{
+	      var newB = Math.floor(startColor[2] - newGrad * i);
+	      var newR = Math.floor(startColor[1] + newGrad * i);
+	      colors.push("rgba(" + [newR, 64, newB, 0.8].join() + ")");
+	  }
       }
       
       
@@ -48,7 +62,7 @@ export default class DescriptionChart extends Component {
           labels: this.state.keys,
           datasets: [{
               data: this.state.data,
-              backgroundColor: backgroundColors
+              backgroundColor: colors
           }]
       }
       
@@ -99,7 +113,9 @@ function getData(obj, filter){
     .then((res) => res.json())
     .then(data => {
 	var keyVals = Object.keys(data);
+	
 	var values = Object.values(data);
+	
 	obj.setState({ data : values, keys : keyVals, ready: true});
     });    
 }

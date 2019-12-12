@@ -28,27 +28,53 @@ export default class WeaponTypeChart extends Component {
 
   render() {
 
-    if (this.state.ready == false) {
-      return null;
-    }
-    var dataValues = this.state.data;
-    var data = {
-      labels: this.state.keys,
-      datasets: [{
-        data: this.state.data,
-      }]
-    }
-    var options = {
-      maintainAspectRatio: false
-    }
+      if(this.state.ready == false) {
+	  return null;
+      }
+      var dataValues = this.state.data;
 
-    return (
-      <React.Fragment>
-        <div class='fill'>
-          <Doughnut data={data} options={options} redraw />
-        </div>
-      </React.Fragment>
-    );
+      //start color is the blue value in array so can be calculated
+      var startColor = [64, 64, 255, 0.8];
+      //use this as last element
+      var endColor = "rgba(255, 64, 64, 0.8)";
+
+      var colors = [];
+      //calculate color gradient based on amount of items
+      if(this.state.keys.length > 0){
+	  var newGrad = (255 - 64) / this.state.keys.length;
+      }
+
+      for(var i = 0; i < this.state.keys.length; i++){
+	  //last itemis the pure red color of our schema
+	  if(i + 1 == this.state.keys.length){
+	      colors.push(endColor);
+	  }
+	  //calculate new color based on gradient
+	  else{
+	      var newB = Math.floor(startColor[2] - newGrad * i);
+	      var newR = Math.floor(startColor[1] + newGrad * i);
+	      colors.push("rgba(" + [newR, 64, newB, 0.8].join() + ")");
+	  }
+      }
+      
+      var data = {
+	  labels: this.state.keys,
+	  datasets: [{
+	      backgroundColor: colors,
+              data: this.state.data,
+	  }]
+      }
+      var options = {
+	  maintainAspectRatio: false
+      }
+      
+      return (
+	      <React.Fragment>
+              <div class='fill'>
+              <Doughnut data={data} options={options} redraw />
+              </div>
+	      </React.Fragment>
+      );
   }
 }
 

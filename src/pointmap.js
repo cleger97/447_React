@@ -1,26 +1,26 @@
 import React, {Component} from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
-var allInstancesFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/crimeinstances/";
+var allInstancesFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/latitude-longitude-all/";
 export default class PointMap extends Component {
 
     constructor() {
 	super()
 	this.state = {
-	         ready: false,
+	    ready: false,
 	    lat: 39.2904,
 	    lng: -76.6122,
 	    zoom: 11,
 
 	    mapHidden: false,
 	    layerHidden: false,
-	    addressPoints,
-	    radius: 18,
-	    blur: 8,
+	    
 	    max: 0.5,
 	    limitAddressPoints: true,
 	    data:{},
 	}
+	this.getNext = this.getNext.bind(this)
+	this.getPrev = this.getPrev.bind(this)
     }
 
     componentDidMount() {
@@ -34,7 +34,18 @@ export default class PointMap extends Component {
       }
     }
     
-
+    getNext(){
+	if(this.state.data["next"] != null){
+	    var page = this.state.data["next"]
+	    Promise.all([getData(this, this.props.filter, page)]);
+	}
+    }
+    getPrev(){
+	if(this.state.data["previous"] != null){
+	    var page = this.state.data["previous"]
+	    Promise.all([getData(this, this.props.filter, page)]);
+	}
+    }
 
         
     render() {
@@ -72,23 +83,33 @@ export default class PointMap extends Component {
 	    );
 	}
 
-
-
-	if (this.state.mapHidden) {
-	    return (
-		    <div>
-		    <input
-		type="button"
-		value="Toggle Map"
-		onClick={() => this.setState({ mapHidden: !this.state.mapHidden })}
-		    />
-		    </div>
-	    );
+	var points = [];
+	var data = this.state.data.results;
+	var lats_longs = [];
+	var labels = [];
+	console.log(data)
+	for(var i = 0; i < data.length; i++){
+	    var point_position = [data[i]["latitude"], data[i]["longitude"]]
+	    var date = "Date: " + data[i].crimedate
+	    var time = "Time: " + data[i].crimetime
+	    var desc = "Description" + data[i].description
+		
+	    points.push(
+		<Marker position={point_position}>
+		<Popup>
+		    {date}
+		{time}
+		{desc}
+		</Popup>
+		</Marker>
+	    )
 	}
+	console.log(points)
+	
 	
 	return (
 		<React.Fragment>
-		<h5 style={{"color":"black"}}>Heatmap</h5>
+		<h5 style={{"color":"black"}}>Pointmap</h5>
 		
 	        <Map center={position} zoom={this.state.zoom}>
 
@@ -97,22 +118,27 @@ export default class PointMap extends Component {
 	    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 	    url='https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 	        />
-		<Marker position={position}>
-		<Popup>
-		A pretty CSS3 popup. <br/> Easily customizable.
-		</Popup>
-		</Marker>
-		</Map>
-	    
+		{points}
+	    </Map>
+		<div style={{"align": "left"}}>
+		<button onClick={this.getPrev}>Prev</button>
+		<button onClick={this.getNext}>Next</button>
+		</div>
 		</React.Fragment>
 	);
     }
     
 }
 
-function getData(obj, filter){
-
-    fetch(allInstancesFetch + filter, {
+function getData(obj, filter, page){
+    
+    if(page == null){
+	var url = allInstancesFetch + filter
+    }
+    else{
+	var url = page
+    }
+    fetch(url, {
       headers : { 
         'Content-Type': 'application/json',
         'Accept': 'application/json',

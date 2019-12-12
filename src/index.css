@@ -15,7 +15,7 @@ code {
 
 @font-face {
     font-family: mismo;
-    src: url('./fonts/Mismo Campus.ttf');
+    src: url('./fonts/Mismo Regular.ttf');
 }
 
 #header-div{
@@ -46,39 +46,12 @@ code {
   width : 100%;
 }
 
-#timeline{
-    color:black;
-    border-color: white;
-    background-color: #E6E6E6;
-    border-width: 5px;
-}
-
-#weaponchart{
-    color:black;
-    border-color: white;
-    background-color: #E6E6E6;
-    border-width: 5px;
-}
-
-#inoutchart{
+.chart{
     color:black;
     border-color: white;
     border-width: 5px;
     background-color: #E6E6E6;
-}
-
-#descriptionchart{
-    color:black;
-    border-color: white;
-    border-width: 5px;
-    background-color: #E6E6E6;
-}
-
-#timechart{
-    color:black;
-    border-color: white;
-    border-width: 5px;
-    background-color: #E6E6E6;
+    padding: 8px;
 }
 
 #dataForm{
