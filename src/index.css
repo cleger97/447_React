@@ -104,6 +104,12 @@ code {
 .time-select{
     width: 50%;
     background-color: #E6E6E6;
+    margin-bottom: 10px;
+}
+
+.date-select{
+    width: 50%;
+    background-color: #E6E6E6;
 }
 
 .aligned input{
@@ -113,6 +119,7 @@ code {
 
 .small-label{
     font-size: small;
+    margin-top: 5px;
 }
 
 .filter-show-button{
@@ -130,7 +137,7 @@ code {
 }
 
 #filter-box {
-    margin-top: 25px;
+    margin-top: 10px;
     font-size: 21px;
     text-align: center;
 
