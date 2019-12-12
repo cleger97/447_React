@@ -10,6 +10,8 @@ export default class Table extends Component {
     constructor(props){
 	super(props);
 	this.state = {filter: "", ready: false, data: {}, keys: {}};
+	this.getNext = this.getNext.bind(this)
+	this.getPrev = this.getPrev.bind(this)
     }
 
     componentDidMount() {
@@ -20,6 +22,21 @@ export default class Table extends Component {
 	if (this.props.filter != oldProps.filter) {
 	    this.setState({ data: {}, keys: {}, ready: false });
 	    Promise.all([getData(this, this.props.filter)]);
+	}
+    }
+
+    getNext(){
+	console.log("Going to next page: ", this.state.data)
+	if(this.state.data["next"] != null){
+	    var page = this.state.data["next"]
+	    Promise.all([getData(this, this.props.filter, page)]);
+	}
+    }
+
+    getPrev(){
+	if(this.state.data["previous"] != null){
+	    var page = this.state.data["previous"]
+	    Promise.all([getData(this, this.props.filter, page)]);
 	}
     }
     
@@ -34,7 +51,6 @@ export default class Table extends Component {
 	//build the headers
 	for(var i = 0; i < column_headers.length; i++){
 	    var curr_val = column_headers[i];
-	    console.log("Setting up column header: ", curr_val)
 	    var h = <th>{curr_val}</th>
 	    headers.push(h)
 	}
@@ -65,13 +81,11 @@ export default class Table extends Component {
 	    rows.push(row);
 	}
 	
-	
-	console.log("got this table data: ", this.state.data, this.state.keys)
 	return (
 		<React.Fragment>
 		<div class="col-md-12 table-outer">
-		<button>Prev</button>
-		<button>Next</button>
+		<button onClick={this.getPrev}>Prev</button>
+		<button onClick={this.getNext}>Next</button>
 		<div class = "table-holder" style={{"padding": "15px"}}>
 
 		
@@ -89,20 +103,28 @@ export default class Table extends Component {
     
 }
 
-function getData(obj, filter){
-  fetch(crimeFetch + filter, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    }
+function getData(obj, filter, page){
 
-  })
-    .then((res) => res.json())
-    .then(data => {
-	obj.setState({
+    if(page == null){
+	var url = crimeFetch + filter;
+    }
+    else{
+	var url = page;
+    }
+	
+    fetch(url, {
+	headers: {
+	    'Content-Type': 'application/json',
+	    'Accept': 'application/json',
+	}
+	
+    })
+	.then((res) => res.json())
+	.then(data => {
+	    obj.setState({
 	    
-            data: data,
-            ready: true
+		data: data,
+		ready: true
+	    });
 	});
-    });
 }
