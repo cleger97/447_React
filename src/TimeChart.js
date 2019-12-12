@@ -38,7 +38,7 @@ export default class TimeChart extends Component {
           labels: this.state.keys,
           datasets: [{
               data: this.state.data,
-	      pointStyle: "dot",
+	      pointStyle: "circle",
 	      fill: false,
 	      lineTension: 0,
 	      borderColor: "#ff6464",
