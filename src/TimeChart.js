@@ -33,6 +33,7 @@ export default class TimeChart extends Component {
 	  return null;
 	  }
 	  
+	  // Code to handle generating tooltips for the chart
 	  var dataArray = [];
 	  var set = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 	  var counter = 0;
@@ -65,6 +66,7 @@ export default class TimeChart extends Component {
 	  tooltips: {
 		  //titleFontSize: 0,
 		  callbacks: {
+			// This is how we generate the labels
 			labels: function (item, data){return labelArray[item[0].index]},
 			title: function (item, data){return labelArray[item[0].index]}
 		  }
