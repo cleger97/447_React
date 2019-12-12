@@ -8,6 +8,7 @@ import DescriptionChart from './DescriptionChart'
 import TimeChart from './TimeChart'
 import image from './assets/flag.jpg'
 import PointMap from './pointmap'
+import Table from './Table'
 
 export default class FilterManager extends Component {
 
@@ -94,9 +95,11 @@ export default class FilterManager extends Component {
 			</div>
 			<HeatMap filter={this.state.filter}></HeatMap>
 			</div>
-			
 			</div>
-		    
+
+			<div class = "row">
+			<Table filter = {this.state.filter}></Table>			
+			</div>
 		    
 			</React.Fragment>
 		       );
@@ -157,10 +160,15 @@ export default class FilterManager extends Component {
 			</div>
 			<PointMap filter={this.state.filter}></PointMap>
 			</div>
-			
 			</div>
-		    
-		    
+			
+			<div class = "row">
+			<div>
+			
+			<Table filter = {this.state.filter}></Table>
+			</div>
+			</div>
+			
 			</React.Fragment>
 		       );
 	    }
