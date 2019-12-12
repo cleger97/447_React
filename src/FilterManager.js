@@ -36,6 +36,7 @@ export default class FilterManager extends Component {
 
     render(){
 
+
 	if(this.state.currentCharts == "all"){
 
 	    //heatmap rendering, changed from button on heatmap
@@ -43,6 +44,7 @@ export default class FilterManager extends Component {
 		return (<React.Fragment>
 			<div class = 'mw-100 test bar' id="header-div">
 			<img src= {require('./assets/flag.jpg')} height="100%" width = "300px" style = {{float: "right"}}></img>
+      <img src= {require('./assets/USA_Flag.png')} height="100%" width = "300px" style = {{"float": "right"}}></img>
 			<h1 class="header" style={{"font-size": "48px"}}>Touch Point Baltimore</h1>
 			<h1 class="header" style={{"font-size": "28px", "padding-left": "8px"}}>Crime Data Visualizer</h1>
 			</div>
@@ -105,6 +107,7 @@ export default class FilterManager extends Component {
 		return (<React.Fragment>
 			<div class = 'mw-100 test bar' id="header-div">
 			<img src= {require('./assets/flag.jpg')} height="100%" width = "300px" style = {{float: "right"}}></img>
+      <img src= {require('./assets/USA_Flag.png')} height="100%" width = "300px" style = {{"float": "right"}}></img>
 			<h1 class="header" style={{"font-size": "48px"}}>Touch Point Baltimore</h1>
 			<h1 class="header" style={{"font-size": "28px", "padding-left": "8px"}}>Crime Data Visualizer</h1>
 			</div>
