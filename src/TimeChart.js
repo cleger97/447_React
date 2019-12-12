@@ -31,24 +31,42 @@ export default class TimeChart extends Component {
 
       if(this.state.ready == false){
 	  return null;
-      }
+	  }
+	  
+	  var dataArray = [];
+	  var set = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+	  var counter = 0;
+	  var labelArray = [];
+	  this.state.data.forEach((data) => {
+		var labelSet = set[counter % 12] + ":00 - " + set[counter % 12] + ":59" +
+			((counter < 12) ? " am" : " pm");
+		labelArray.push(labelSet);
+		counter++;
+		//console.log("Added label");
+	  })
       
       
       var data = {
           labels: this.state.keys,
-          datasets: [{
-              data: this.state.data,
-	      pointStyle: "dot",
-	      fill: false,
-	      lineTension: 0,
-	      borderColor: "#ff6464",
-          }]
+		  
+		 datasets: [{
+        	data: this.state.data,
+	      	pointStyle: "dot",
+	      	fill: false,
+	      	lineTension: 0,
+	      	borderColor: "#ff6464",
+		  }]
+		  
       }
       
       var options = {
 	  maintainAspectRatio : false,
 	  tooltips: {
-	      titleFontSize: 0,
+		  //titleFontSize: 0,
+		  callbacks: {
+			labels: function (item, data){return labelArray[item[0].index]},
+			title: function (item, data){return labelArray[item[0].index]}
+		  }
 	  },
 	  scales: {
 	      xAxes:[{
