@@ -123,8 +123,6 @@ export default class HeatMap extends Component {
 
 	var positions = this.state.data
 	console.log("Using this map data: ", positions, typeof positions);
-	if(typeof positions != "Array")
-	    positions = null;
 	
 	return (
 		<React.Fragment>
