@@ -94,7 +94,7 @@ export default class Table extends Component {
 		<div style={{"display": "flex"}}>
 		<button onClick={this.getPrev}>Prev</button>
 		<button onClick={this.getNext}>Next</button>
-		<h5>{this.state.page}/{this.state.maxPage}</h5>
+		<h5 style={{"margin": "10px"}}>{this.state.page}/{this.state.maxPage}</h5>
 		</div>
 		<div class = "table-holder" style={{"padding": "15px"}}>
 
