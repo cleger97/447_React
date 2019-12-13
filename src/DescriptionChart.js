@@ -81,7 +81,7 @@ export default class DescriptionChart extends Component {
 	      yAxes: [
 		  {
 		      ticks: {
-		          display: false
+		          display: true
 		      }
 		  }
 	      ]

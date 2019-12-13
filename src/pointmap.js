@@ -53,7 +53,7 @@ export default class PointMap extends Component {
 	
 	var page_in = document.getElementById("page-input");
 	var page_changed = page_in.value
-	if(page_changed != null && page_changed != "" && page_changed >= 0 ){
+	if(page_changed != null && page_changed != "" && page_changed > 0 ){
 	    if(page_changed <= this.state.maxPage){
 		console.log(page_in, page_changed)
 		Promise.all([getData(this, this.props.filter, null, page_changed)])
@@ -150,10 +150,10 @@ export default class PointMap extends Component {
 		<div style={{"display": "flex"}}>
 		<button onClick={this.getPrev}>Prev</button>
 		<button onClick={this.getNext}>Next</button>
-		<input id="page-input" onChange={this.setPage} style={{"width": "70px"}} type="number" min="1" max={this.state.maxPage} defaultValue="1"></input>
+		<input id="page-input" onChange={this.setPage} style={{"width": "70px", "margin": "5px"}} type="number" min="1" max={this.state.maxPage} defaultValue="1"></input>
 		<h6 style={{"padding": "2px"}}>/{this.state.maxPage}</h6>
 		</div>
-		<h6 style={{"font-size": "small", "padding": "2px"}}>Showing: Latitudes: ({minPoint[0]},{maxPoint[0]}), Longitudes: ({minPoint[1]},{maxPoint[1]}) </h6>
+		<h6 style={{"font-size": "small", "padding": "2px", "float": "left"}}>Showing: Latitudes: ({minPoint[0]},{maxPoint[0]}), Longitudes: ({minPoint[1]},{maxPoint[1]}) </h6>
 		</div>
 		</React.Fragment>
 	);
@@ -188,6 +188,7 @@ function getData(obj, filter, page, page_changed){
     .then((res) => res.json())
 	.then(data => {
 	    console.log(url)
+	    
 	    //calculate number of pages
 	    var count = data["count"];
 	    var page_num = Math.ceil(count/100);
