@@ -28,6 +28,7 @@ code {
 .table-outer{
     border: 10px solid #2B2B75;
     background-color: #2B2B75;
+    height: 600px;
 }
 
 table {
