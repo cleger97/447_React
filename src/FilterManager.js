@@ -18,6 +18,7 @@ export default class FilterManager extends Component {
 
 	this.updateFilter = this.updateFilter.bind(this);
 	this.switchMap = this.switchMap.bind(this);
+	this.switchLoc = this.switchLoc.bind(this);
     }
 
     updateFilter(newFilter){
@@ -35,13 +36,71 @@ export default class FilterManager extends Component {
 	this.setState({filter: currentFilter, currentCharts: currentCharts, currentMap: currentMap})
     }
 
+    switchLoc(){
+	this.setState({currentCharts: "location"})
+    }
+
     render(){
 
 
 	if(this.state.currentCharts == "all"){
 
+
+	    var showCharts =
+		<div class = "col-md-6">
+
+		<div class = "row">
+		<div id="inoutchart" class="col-md-6 test box chart">
+		<div style={{"align": "left", "display": "flex", "justify-content": "space-between"}}>
+		<h5> Crimes by Location </h5>
+		<button  class="max-button" onClick={this.switchLoc}>+</button>
+		</div>
+		<InOutChart filter={this.state.filter}></InOutChart>
+		</div>
+		
+		<div id="descriptionchart" class="col-md-6 test box chart">
+		<div style={{"align": "left", "display": "flex", "justify-content": "space-between"}}>
+		<h5> Crimes by Type </h5>
+		<button class="max-button">+</button>
+		</div>
+		<DescriptionChart filter={this.state.filter}></DescriptionChart>
+		</div>
+		</div>
+		
+		<div class = "row">	
+
+		<div id="timechart" class="col-md-6 test box chart">
+		<div style={{"align": "left", "display": "flex", "justify-content": "space-between"}}>
+		<h5> Crimes by Time of Day </h5>
+		<button class="max-button">+</button>
+		</div>
+		<TimeChart filter={this.state.filter}></TimeChart>
+		</div>
+
+		<div id="weaponchart" class="col-md-6 test box chart">
+		<div style={{"align": "left", "display": "flex", "justify-content": "space-between"}}>
+		<h5> Crimes by Weapon </h5>
+		<button class="max-button">+</button>
+		</div>
+		<WeaponTypeChart filter={this.state.filter}></WeaponTypeChart>
+		</div>
+		
+		</div>
+		</div>
+	}else if(this.state.currentCharts == "location"){
+	    
+	    var showCharts =
+		<div id="inoutchart" class="col-md-6 test box chart" style={{"height": "625px"}}>
+		<div style={{"align": "left", "display": "flex", "justify-content": "space-between"}}>
+		<h5> Crimes by Location </h5>
+		<button  class="max-button" onClick={this.switchLoc}>+</button>
+		</div>
+		<InOutChart filter={this.state.filter}></InOutChart>
+		</div>
+
+	}
 	    //heatmap rendering, changed from button on heatmap
-	    if(this.state.currentMap == "heatmap"){
+	if(this.state.currentMap == "heatmap"){
 		return (<React.Fragment>
 			<div class = 'mw-100 test bar' id="header-div">
 			<img src= {require('./assets/flag.jpg')} height="100%" width = "300px" style = {{"float": "right"}}></img>
@@ -59,36 +118,11 @@ export default class FilterManager extends Component {
 			</div>
 			
 			<div class = "row test">
-			<div class = "col-md-6">
-			<div class = "row">
-			<div id="inoutchart" class="col-md-6 test box chart">
-			<h5> Crimes by Location </h5>
-			<InOutChart filter={this.state.filter}></InOutChart>
-			</div>
+			 
 			
-			<div id="descriptionchart" class="col-md-6 test box chart">
-			<h5> Crimes by Type </h5>
-			<DescriptionChart filter={this.state.filter}></DescriptionChart>
-			</div>
-			
-			</div>
-			<div class = "row">
-			
-			<div id="timechart" class="col-md-6 test box chart">
-			<h5> Crimes by Time of Day </h5>
-			<TimeChart filter={this.state.filter}></TimeChart>
-			</div>
-			
-			<div id="weaponchart" class="col-md-6 test box chart">
-			<h5> Crimes by Weapon Type </h5>
-			<WeaponTypeChart filter={this.state.filter}></WeaponTypeChart>
-			</div>
+			{showCharts}
 			
 			
-			</div>
-			
-			
-			</div>
 			<div id="heatmap" class="col-md-6 test box chart">
 			<div align="right">
 			<button onClick={this.switchMap}>Switch to Pointmap</button>
@@ -106,7 +140,7 @@ export default class FilterManager extends Component {
 		
 	    }
 	    //pointmap rendering, changed from button on pointmap
-	    else{
+	else{
 		return (<React.Fragment>
 			<div class = 'mw-100 test bar' id="header-div">
 			<img src= {require('./assets/flag.jpg')} height="100%" width = "300px" style = {{"float": "right"}}></img>
@@ -124,36 +158,9 @@ export default class FilterManager extends Component {
 			</div>
 			
 			<div class = "row test">
-			<div class = "col-md-6">
-			<div class = "row">
-			<div id="inoutchart" class="col-md-6 test box chart">
-			<h5> Crimes by Location </h5>
-			<InOutChart filter={this.state.filter}></InOutChart>
-			</div>
+
+			{showCharts}
 			
-			<div id="descriptionchart" class="col-md-6 test box chart">
-			<h5> Crimes by Type </h5>
-			<DescriptionChart filter={this.state.filter}></DescriptionChart>
-			</div>
-			
-			</div>
-			<div class = "row">
-			
-			<div id="timechart" class="col-md-6 test box chart">
-			<h5> Crimes by Time of Day </h5>
-			<TimeChart filter={this.state.filter}></TimeChart>
-			</div>
-			
-			<div id="weaponchart" class="col-md-6 test box chart">
-			<h5> Crimes by Weapon Type </h5>
-			<WeaponTypeChart filter={this.state.filter}></WeaponTypeChart>
-			</div>
-			
-			
-			</div>
-			
-			
-			</div>
 			<div id="pointmap" class="col-md-6 test box chart">
 			<div align="right">
 			<button onClick={this.switchMap}>Switch to Heatmap</button>
@@ -171,8 +178,8 @@ export default class FilterManager extends Component {
 			
 			</React.Fragment>
 		       );
-	    }
 	}
+	
     }
 
     
