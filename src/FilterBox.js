@@ -291,10 +291,10 @@ function getCurrentDateStr(){
     var curr = new Date();
 
     var year = curr.getFullYear();
-    var month = curr.getMonth();
+    var month = curr.getMonth() + 1;
     var day = curr.getDate();
 
-    return [year, day, month].join("-")
+    return [year, month, day].join("-")
     
 }
 

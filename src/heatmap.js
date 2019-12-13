@@ -121,7 +121,10 @@ export default class HeatMap extends Component {
 	    );
 	}
 
-	console.log("Using this map data: ", this.state.data);
+	var positions = this.state.data
+	console.log("Using this map data: ", positions, typeof positions);
+	if(typeof positions != "Array")
+	    positions = null;
 	
 	return (
 		<React.Fragment>
@@ -133,7 +136,7 @@ export default class HeatMap extends Component {
 	     <HeatmapLayer
 	     fitBoundsOnLoad
 	     fitBoundsOnUpdate
-	     points={this.state.data}
+	     points={positions}
 	     longitudeExtractor={m => m[1]}
 	     latitudeExtractor={m => m[0]}
 	     gradient={gradient}
@@ -159,7 +162,8 @@ export default class HeatMap extends Component {
 		</Map>
 
 		
-		<input 
+		<input style={{"width":"200px", "margin-left":"auto",
+			       "margin-right":"auto"}}
 	    type="button"
 	    value="Toggle Heatmap"
 	    onClick={() => this.setState({ layerHidden: !this.state.layerHidden })}

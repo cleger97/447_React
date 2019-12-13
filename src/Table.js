@@ -70,22 +70,24 @@ export default class Table extends Component {
 	//build the rows
 	var rows=[];
 	var results = this.state.data.results;
-	for(var i = 0; i < results.length; i++){
-	    var column_vals = [];
+	if(results != null){
+	    for(var i = 0; i < results.length; i++){
+		var column_vals = [];
 	    
-	    column_vals.push(<td>{curr_id}</td>);
-	    //build the columns
-	    for(var j = 0; j < columns.length; j++){
-		var curr_val = results[i][columns[j]];
-		column_vals.push(<td>{curr_val}</td>)
-	    }
-	    var row =
-		<tr>
-		{column_vals}
+		column_vals.push(<td>{curr_id}</td>);
+		//build the columns
+		for(var j = 0; j < columns.length; j++){
+		    var curr_val = results[i][columns[j]];
+		    column_vals.push(<td>{curr_val}</td>)
+		}
+		var row =
+		    <tr>
+		    {column_vals}
 		</tr>
-		
-	    rows.push(row);
-	    curr_id++;
+		    
+		rows.push(row);
+		curr_id++;
+	}
 	}
 	
 	return (
