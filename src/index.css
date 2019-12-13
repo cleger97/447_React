@@ -15,7 +15,44 @@ code {
 
 @font-face {
     font-family: mismo;
-    src: url('./fonts/Mismo Campus.ttf');
+    src: url('./fonts/Mismo Regular.ttf');
+}
+
+.table-holder{
+    border: 10px solid #2B2B75;
+    background-color: #2B2B75;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.table-outer{
+    border: 10px solid #2B2B75;
+    background-color: #2B2B75;
+    height: 600px;
+}
+
+table {
+    background-color: #E6E6E6;
+    border: 10px solid #2B2B75;
+    border-collapse:collapse;
+    font-size: medium;
+    color: black;
+    height: auto;
+    width: 100%;
+    display: table;
+    align: center;
+}
+
+th, td {
+    border: 1px solid black;
+}
+
+tr{
+    height: 50px;
+}
+
+th {
+    padding: 10px;
 }
 
 #header-div{
@@ -46,39 +83,12 @@ code {
   width : 100%;
 }
 
-#timeline{
-    color:black;
-    border-color: white;
-    background-color: #E6E6E6;
-    border-width: 5px;
-}
-
-#weaponchart{
-    color:black;
-    border-color: white;
-    background-color: #E6E6E6;
-    border-width: 5px;
-}
-
-#inoutchart{
+.chart{
     color:black;
     border-color: white;
     border-width: 5px;
     background-color: #E6E6E6;
-}
-
-#descriptionchart{
-    color:black;
-    border-color: white;
-    border-width: 5px;
-    background-color: #E6E6E6;
-}
-
-#timechart{
-    color:black;
-    border-color: white;
-    border-width: 5px;
-    background-color: #E6E6E6;
+    padding: 8px;
 }
 
 #dataForm{
@@ -131,6 +141,12 @@ code {
 .time-select{
     width: 50%;
     background-color: #E6E6E6;
+    margin-bottom: 10px;
+}
+
+.date-select{
+    width: 50%;
+    background-color: #E6E6E6;
 }
 
 .aligned input{
@@ -140,6 +156,12 @@ code {
 
 .small-label{
     font-size: small;
+    margin-top: 5px;
+}
+
+#filter-show-scroll{
+ 
+    overflow-y: scroll;
 }
 
 .filter-show-button{
@@ -157,7 +179,7 @@ code {
 }
 
 #filter-box {
-    margin-top: 25px;
+    margin-top: 10px;
     font-size: 21px;
     text-align: center;
 

@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import HeatmapLayer from './HeatmapLayer';
 
+// Depreciated for testing
 const addressPoints = [[39.29, -76.60, "999"],
 		 [39.295, -76.60, "999"],
 		 [39.298, -76.605, "999"],
@@ -93,7 +94,8 @@ export default class HeatMap extends Component {
 		</Map>
 
 		
-		<input
+		    <input style={{"width":"200px", "margin-left":"auto",
+				   "margin-right":"auto"}}
 	    type="button"
 	    value="Toggle Heatmap"
 	    onClick={() => this.setState({ layerHidden: !this.state.layerHidden })}
@@ -109,7 +111,8 @@ export default class HeatMap extends Component {
 	if (this.state.mapHidden) {
 	    return (
 		    <div>
-		    <input
+		    <input style={{"width":"200px", "margin-left":"auto",
+				   "margin-right":"auto"}}
 		type="button"
 		value="Toggle Map"
 		onClick={() => this.setState({ mapHidden: !this.state.mapHidden })}
@@ -156,7 +159,7 @@ export default class HeatMap extends Component {
 		</Map>
 
 		
-		<input
+		<input 
 	    type="button"
 	    value="Toggle Heatmap"
 	    onClick={() => this.setState({ layerHidden: !this.state.layerHidden })}

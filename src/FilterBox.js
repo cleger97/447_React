@@ -61,13 +61,15 @@ export default class FilterBox extends Component {
 	console.log(event)
 
 	var curr_sel = document.getElementById(event.target.filterid);
-	if(curr_sel == null){
+	if(curr_sel == null && event.target.filterid == "crimetime_range"){
 	    curr_sel = document.getElementsByClassName("time-select")
 	}
+	if(curr_sel == null && event.target.filterid == "crimedate_range"){
+	    curr_sel = document.getElementsByClassName("date-select")
+	}
 	
-	if(event.target.filterid == "crimetime_range"){
+	if(event.target.filterid == "crimetime_range" || event.target.filterid == "crimedate_range"){
 	    curr_sel[0].value = ""
-
 	    curr_sel[1].value = ""
 	}else{
 	    console.log("Currsel ", curr_sel)
@@ -109,6 +111,17 @@ export default class FilterBox extends Component {
 	//get the values from the min and max time
 	var timeSelects = document.getElementsByClassName("time-select");
 	var newFilter = getTimeValues(timeSelects);
+	if(newFilter && queryString){
+	    queryString = queryString + "&" + newFilter;
+	    allFilters.push(newFilter);
+	} else if(newFilter && !queryString){
+	    queryString = "?" + newFilter;
+	    allFilters.push(newFilter);
+	}
+
+	//get the values from the min and max date
+	var dateSelects = document.getElementsByClassName("date-select");
+	var newFilter = getDateValues(dateSelects);
 	if(newFilter && queryString){
 	    queryString = queryString + "&" + newFilter;
 	    allFilters.push(newFilter);
@@ -188,6 +201,14 @@ export default class FilterBox extends Component {
 	    }
 	    times[i].value = "";
 	}
+
+	var dates = document.getElementsByClassName("date-select");
+	for(var i = 0; i < dates.length; i++){
+	    if(dates[i].value != ""){
+		cleared = true;
+	    }
+	    dates[i].value = "";
+	}
 	
 	//Only update filters if a value has been cleared
 	if(cleared)
@@ -231,14 +252,25 @@ export default class FilterBox extends Component {
 	    <input id="min-time" class="time-select" type="time" onChange={this.filterSelected}>
  		</input>
 
-	</div>,
+	    </div>,
+
+		<h6 class="small-label" >Min-Max Date</h6>,
+		<div class="aligned">
+
+		<input id="max-date" class="date-select" type="date" min="2014-01-01" max={getCurrentDateStr()} onChange={this.filterSelected}>
+		</input>
+		<input id="min-date" class="date-select" type="date" min="2014-01-01" max={getCurrentDateStr()} onChange={this.filterSelected}>
+ 		</input>
+
+	    </div>,
 		
- 		<button onClick={this.clearAll} class='clear-button'>Clear Filters
-	    </button>,
+ 		
 		<div id="filter-show" hidden>
 		<h6 class="small-label">Current Filters:</h6>
-		<div id="filter-show-scroll" style={{overflow: "scroll", height: "100px"}} data={this.currentFilters}><button></button> </div>
-		</div>
+		<div id="filter-show-scroll" style={{height: "100px"}} data={this.currentFilters}><button></button> </div>
+		</div>,
+	    <button onClick={this.clearAll} class='clear-button'>Clear Filters
+	    </button>,
 		
 	];
 
@@ -246,11 +278,23 @@ export default class FilterBox extends Component {
 		<React.Fragment>
 
         <div class = 'fill' id = 'filter-box'>
-		<h5 id="filter-title"> Filters:  </h5>
+		<h5 id="filter-title">Filters</h5>
 	    {this.componentList}
 	    </div>
       </React.Fragment>)
     }
+    
+}
+
+function getCurrentDateStr(){
+
+    var curr = new Date();
+
+    var year = curr.getFullYear();
+    var month = curr.getMonth();
+    var day = curr.getDate();
+
+    return [year, day, month].join("-")
     
 }
 
@@ -280,7 +324,7 @@ class FilterList extends Component {
 	return (
 		<React.Fragment>
 		<h6 class="filter-label">{title}</h6>
-		<select class="filter-select" size="3" id={this.label} onChange={this.props.update}  name={this.label} multiple>
+		<select class="filter-select" size="4" id={this.label} onChange={this.props.update}  name={this.label} multiple>
 		{options}
 	        </select>
 		</React.Fragment>
@@ -400,6 +444,34 @@ function getTimeValues(time){
 
     var time_range = min + "," + max
     return label+"="+time_range;
+}
+
+function getDateValues(date){
+    var label = "crimedate_range";
+    var minInput = date[0].value;
+    var maxInput = date[1].value;
+
+    console.log("Min and max date values: ", minInput, " - - ", maxInput)
+    
+    if (minInput && maxInput) {
+	var min = minInput;
+	var max = maxInput;
+    } else if(minInput) {
+	var min = minInput;
+	var max = getCurrentDateStr();
+
+    } else if(maxInput) {
+	var min = new Date(2014, 1, 1);
+	min = min.getFullYear() +  "-" + min.getMonth() + "-" + min.getDate() 
+	var max = maxInput;
+    } else {
+	return null;
+    }
+
+    
+    var date_range = min + "," + max
+    console.log("Built this date filter: ", date_range)
+    return label+"="+date_range;
 }
 
 function sanitizeParam(param){

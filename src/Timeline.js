@@ -4,6 +4,7 @@ import ChartJS from 'chart.js'
 import {Bar} from 'react-chartjs-2';
 
 import {genRandColor} from './utility.js';
+import { stringLiteral } from '@babel/types';
 
 
 var simpleFetch = 'http://ec2-34-228-208-5.compute-1.amazonaws.com/date-count/?crimedate_gte=2014-01-01';
@@ -15,6 +16,7 @@ export default class Timeline extends Component {
       keys: [],
       data: [],
       colors: [],
+      mean: 0,
       ready: false
     };
   }
@@ -41,10 +43,17 @@ export default class Timeline extends Component {
     //console.log(this.state.keys);
     //console.log(this.state.data);
 
+    //console.log(this.state.mean);
+    var legendRed = " Red = above mean.";
+    var legendBlue = " Blue = below mean.";
+    var legend = (isNaN(this.state.mean)) ?  "No values." :  "Average crimes per month: " + Math.trunc(this.state.mean) + "." + legendRed + legendBlue;
+    
+
     // TODO: set scale
     var data = {
       labels: this.state.keys,
       datasets: [{
+        label: legend,
         data: this.state.data,
         backgroundColor: this.state.colors
       }]
@@ -52,7 +61,10 @@ export default class Timeline extends Component {
     var options = {
       maintainAspectRatio : false,
       legend: {
-        display: false
+        //display: false
+        labels: {
+          boxWidth: 0
+        }
       }
     }
 
@@ -254,7 +266,7 @@ function getSimpleFetch(obj, filter) {
     });
 
     //console.log(colorList);
-    obj.setState({ keys: retKeys, data: retData, colors: colorList, ready: true})
+    obj.setState({ keys: retKeys, data: retData, colors: colorList, mean: avg, ready: true})
   });
 
   return null;

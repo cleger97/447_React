@@ -31,44 +31,63 @@ export default class TimeChart extends Component {
 
       if(this.state.ready == false){
 	  return null;
-      }
+	  }
+	  
+	  // Code to handle generating tooltips for the chart
+	  var dataArray = [];
+	  var set = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+	  var counter = 0;
+	  var labelArray = [];
+	  this.state.data.forEach((data) => {
+		var labelSet = set[counter % 12] + ":00 - " + set[counter % 12] + ":59" +
+			((counter < 12) ? " am" : " pm");
+		labelArray.push(labelSet);
+		counter++;
+		//console.log("Added label");
+	  })
       
       
       var data = {
           labels: this.state.keys,
-          datasets: [{
-              data: this.state.data,
-	      pointStyle: "line",
-	      fill: false,
-	      lineTension: 0,
-	      borderColor: "#f00",
-	      
-          }]
+		  
+		 datasets: [{
+        	data: this.state.data,
+	      	pointStyle: "dot",
+	      	fill: false,
+	      	lineTension: 0,
+	      	borderColor: "#ff6464",
+		  }]
+		  
+
       }
       
       var options = {
 	  maintainAspectRatio : false,
+	  tooltips: {
+		  //titleFontSize: 0,
+		  callbacks: {
+			// This is how we generate the labels
+			labels: function (item, data){return labelArray[item[0].index]},
+			title: function (item, data){return labelArray[item[0].index]}
+		  }
+	  },
 	  scales: {
 	      xAxes:[{
-		  title: "time",
+		  distribution: "linear",
 		  type: 'time',
-		  gridLines: {
-		      lineWidth: 2
-		  },
 		  time: {
-		      unit: "day",
-		      unitStepSize: 1000,
+		      unit: "second",
+		      unitStepSize: 3600,
 		      displayFormats: {
-			  minute: 'HH:MM:SS',
+			  second: 'h:mm a',
 		      }
-		  }
+		  }, 
 	      }]
 	      ,
 	      yAxes: [
 		  {
 		      ticks: {
 			  min: 0,
-			  stepSize: 1
 		      }
 		  }
 	      ]
@@ -98,9 +117,27 @@ function getData(obj, filter){
  
     })
     .then((res) => res.json())
-    .then(data => {
-	var keyVals = Object.keys(data);
-	var values = Object.values(data);
-	obj.setState({ data : values, keys : keyVals, ready: true});
+	.then(data => {
+
+	    var keyVals = Object.keys(data);
+	    var labels = [];
+	    //create new time labels with correct hour but arbitrary date (unused)
+	    for(var i = 0; i < 24; i++){
+		labels.push(new Date("2000", "01", "01", i.toString(), "00", "00"))
+	    }
+	    //placeholder of 0 for unused times
+	    var labelData = new Array(24).fill(0);
+	    
+	    var values = Object.values(data);
+	    var dateValues = [];
+	    //add up all the times by hour into their resepctive hour bucket
+	    for(var i = 0; i < keyVals.length; i++){
+		
+		var splitStr = keyVals[i].split(":")
+		var dateTime = new Date("2000", "01", "01", splitStr[0], splitStr[1], splitStr[2]);
+		labelData[dateTime.getHours()] += values[i];
+		dateValues.push(dateTime);
+	    }
+	    obj.setState({ data : labelData, keys : labels, ready: true});
     });    
 }
