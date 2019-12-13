@@ -91,7 +91,7 @@ export default class FilterManager extends Component {
 			</div>
 			<div id="heatmap" class="col-md-6 test box chart">
 			<div align="right">
-			<button onClick={this.switchMap}>Switch Type</button>
+			<button onClick={this.switchMap}>Switch to Pointmap</button>
 			</div>
 			<HeatMap filter={this.state.filter}></HeatMap>
 			</div>
@@ -156,7 +156,7 @@ export default class FilterManager extends Component {
 			</div>
 			<div id="pointmap" class="col-md-6 test box chart">
 			<div align="right">
-			<button onClick={this.switchMap}>Switch Type</button>
+			<button onClick={this.switchMap}>Switch to Heatmap</button>
 			</div>
 			<PointMap filter={this.state.filter}></PointMap>
 			</div>

@@ -267,7 +267,7 @@ export default class FilterBox extends Component {
  		
 		<div id="filter-show" hidden>
 		<h6 class="small-label">Current Filters:</h6>
-		<div id="filter-show-scroll" style={{overflow: "scroll", height: "100px"}} data={this.currentFilters}><button></button> </div>
+		<div id="filter-show-scroll" style={{height: "100px"}} data={this.currentFilters}><button></button> </div>
 		</div>,
 	    <button onClick={this.clearAll} class='clear-button'>Clear Filters
 	    </button>,

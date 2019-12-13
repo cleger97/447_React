@@ -159,6 +159,11 @@ th {
     margin-top: 5px;
 }
 
+#filter-show-scroll{
+ 
+    overflow-y: scroll;
+}
+
 .filter-show-button{
     font-size: xx-small;
     background-color: #E6E6E6;
