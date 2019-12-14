@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 var crimeFetch = "http://ec2-34-228-208-5.compute-1.amazonaws.com/crimeinstances/";
 
-var columns = ["crimecode", "crimedate", "crimetime", "description", "district", "inside_outside", "latitude", "longitude", "location", "neighborhood", "postp", "premise", "weapon"]
+var columns = ["crimecode", "crimedate", "crimetime", "description", "district", "inside_outside", "latitude", "longitude", "location", "neighborhood", "post", "premise", "weapon"]
 var column_headers = ["#", "Code", "Date", "Time", "Description", "District", "Inside Outside", "Latitude", "Longitude", "Location", "Neighborhood", "Post", "Premise", "Weapon"]
 
 export default class Table extends Component {
